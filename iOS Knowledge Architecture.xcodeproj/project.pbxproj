@@ -1,0 +1,601 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD1022EDF72400C47F72 /* AppDelegate.m */; };
+		E308BD1422EDF72400C47F72 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD1322EDF72400C47F72 /* ViewController.m */; };
+		E308BD1722EDF72400C47F72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E308BD1522EDF72400C47F72 /* Main.storyboard */; };
+		E308BD1A22EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E308BD1822EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld */; };
+		E308BD1C22EDF72600C47F72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E308BD1B22EDF72600C47F72 /* Assets.xcassets */; };
+		E308BD1F22EDF72600C47F72 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E308BD1D22EDF72600C47F72 /* LaunchScreen.storyboard */; };
+		E308BD2222EDF72600C47F72 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD2122EDF72600C47F72 /* main.m */; };
+		E308BD2C22EDF72600C47F72 /* iOS_Knowledge_ArchitectureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD2B22EDF72600C47F72 /* iOS_Knowledge_ArchitectureTests.m */; };
+		E308BD3722EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD3622EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E308BD2822EDF72600C47F72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E308BD0422EDF72400C47F72 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E308BD0B22EDF72400C47F72;
+			remoteInfo = "iOS Knowledge Architecture";
+		};
+		E308BD3322EDF72600C47F72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E308BD0422EDF72400C47F72 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E308BD0B22EDF72400C47F72;
+			remoteInfo = "iOS Knowledge Architecture";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E308BD0C22EDF72400C47F72 /* iOS Knowledge Architecture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Knowledge Architecture.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E308BD0F22EDF72400C47F72 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E308BD1022EDF72400C47F72 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E308BD1222EDF72400C47F72 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E308BD1322EDF72400C47F72 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E308BD1622EDF72400C47F72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E308BD1922EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iOS_Knowledge_Architecture.xcdatamodel; sourceTree = "<group>"; };
+		E308BD1B22EDF72600C47F72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E308BD1E22EDF72600C47F72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E308BD2022EDF72600C47F72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E308BD2122EDF72600C47F72 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E308BD2722EDF72600C47F72 /* iOS Knowledge ArchitectureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS Knowledge ArchitectureTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E308BD2B22EDF72600C47F72 /* iOS_Knowledge_ArchitectureTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_Knowledge_ArchitectureTests.m; sourceTree = "<group>"; };
+		E308BD2D22EDF72600C47F72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E308BD3222EDF72600C47F72 /* iOS Knowledge ArchitectureUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS Knowledge ArchitectureUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E308BD3622EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_Knowledge_ArchitectureUITests.m; sourceTree = "<group>"; };
+		E308BD3822EDF72600C47F72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E308BD0922EDF72400C47F72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E308BD2422EDF72600C47F72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E308BD2F22EDF72600C47F72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E308BD0322EDF72400C47F72 = {
+			isa = PBXGroup;
+			children = (
+				E308BD0E22EDF72400C47F72 /* iOS Knowledge Architecture */,
+				E308BD2A22EDF72600C47F72 /* iOS Knowledge ArchitectureTests */,
+				E308BD3522EDF72600C47F72 /* iOS Knowledge ArchitectureUITests */,
+				E308BD0D22EDF72400C47F72 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E308BD0D22EDF72400C47F72 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E308BD0C22EDF72400C47F72 /* iOS Knowledge Architecture.app */,
+				E308BD2722EDF72600C47F72 /* iOS Knowledge ArchitectureTests.xctest */,
+				E308BD3222EDF72600C47F72 /* iOS Knowledge ArchitectureUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E308BD0E22EDF72400C47F72 /* iOS Knowledge Architecture */ = {
+			isa = PBXGroup;
+			children = (
+				E308BD0F22EDF72400C47F72 /* AppDelegate.h */,
+				E308BD1022EDF72400C47F72 /* AppDelegate.m */,
+				E308BD1222EDF72400C47F72 /* ViewController.h */,
+				E308BD1322EDF72400C47F72 /* ViewController.m */,
+				E308BD1522EDF72400C47F72 /* Main.storyboard */,
+				E308BD1B22EDF72600C47F72 /* Assets.xcassets */,
+				E308BD1D22EDF72600C47F72 /* LaunchScreen.storyboard */,
+				E308BD2022EDF72600C47F72 /* Info.plist */,
+				E308BD2122EDF72600C47F72 /* main.m */,
+				E308BD1822EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld */,
+			);
+			path = "iOS Knowledge Architecture";
+			sourceTree = "<group>";
+		};
+		E308BD2A22EDF72600C47F72 /* iOS Knowledge ArchitectureTests */ = {
+			isa = PBXGroup;
+			children = (
+				E308BD2B22EDF72600C47F72 /* iOS_Knowledge_ArchitectureTests.m */,
+				E308BD2D22EDF72600C47F72 /* Info.plist */,
+			);
+			path = "iOS Knowledge ArchitectureTests";
+			sourceTree = "<group>";
+		};
+		E308BD3522EDF72600C47F72 /* iOS Knowledge ArchitectureUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E308BD3622EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m */,
+				E308BD3822EDF72600C47F72 /* Info.plist */,
+			);
+			path = "iOS Knowledge ArchitectureUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E308BD0B22EDF72400C47F72 /* iOS Knowledge Architecture */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E308BD3B22EDF72600C47F72 /* Build configuration list for PBXNativeTarget "iOS Knowledge Architecture" */;
+			buildPhases = (
+				E308BD0822EDF72400C47F72 /* Sources */,
+				E308BD0922EDF72400C47F72 /* Frameworks */,
+				E308BD0A22EDF72400C47F72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "iOS Knowledge Architecture";
+			productName = "iOS Knowledge Architecture";
+			productReference = E308BD0C22EDF72400C47F72 /* iOS Knowledge Architecture.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E308BD2622EDF72600C47F72 /* iOS Knowledge ArchitectureTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E308BD3E22EDF72600C47F72 /* Build configuration list for PBXNativeTarget "iOS Knowledge ArchitectureTests" */;
+			buildPhases = (
+				E308BD2322EDF72600C47F72 /* Sources */,
+				E308BD2422EDF72600C47F72 /* Frameworks */,
+				E308BD2522EDF72600C47F72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E308BD2922EDF72600C47F72 /* PBXTargetDependency */,
+			);
+			name = "iOS Knowledge ArchitectureTests";
+			productName = "iOS Knowledge ArchitectureTests";
+			productReference = E308BD2722EDF72600C47F72 /* iOS Knowledge ArchitectureTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E308BD3122EDF72600C47F72 /* iOS Knowledge ArchitectureUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E308BD4122EDF72600C47F72 /* Build configuration list for PBXNativeTarget "iOS Knowledge ArchitectureUITests" */;
+			buildPhases = (
+				E308BD2E22EDF72600C47F72 /* Sources */,
+				E308BD2F22EDF72600C47F72 /* Frameworks */,
+				E308BD3022EDF72600C47F72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E308BD3422EDF72600C47F72 /* PBXTargetDependency */,
+			);
+			name = "iOS Knowledge ArchitectureUITests";
+			productName = "iOS Knowledge ArchitectureUITests";
+			productReference = E308BD3222EDF72600C47F72 /* iOS Knowledge ArchitectureUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E308BD0422EDF72400C47F72 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1030;
+				ORGANIZATIONNAME = Gaoyang;
+				TargetAttributes = {
+					E308BD0B22EDF72400C47F72 = {
+						CreatedOnToolsVersion = 10.3;
+					};
+					E308BD2622EDF72600C47F72 = {
+						CreatedOnToolsVersion = 10.3;
+						TestTargetID = E308BD0B22EDF72400C47F72;
+					};
+					E308BD3122EDF72600C47F72 = {
+						CreatedOnToolsVersion = 10.3;
+						TestTargetID = E308BD0B22EDF72400C47F72;
+					};
+				};
+			};
+			buildConfigurationList = E308BD0722EDF72400C47F72 /* Build configuration list for PBXProject "iOS Knowledge Architecture" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E308BD0322EDF72400C47F72;
+			productRefGroup = E308BD0D22EDF72400C47F72 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E308BD0B22EDF72400C47F72 /* iOS Knowledge Architecture */,
+				E308BD2622EDF72600C47F72 /* iOS Knowledge ArchitectureTests */,
+				E308BD3122EDF72600C47F72 /* iOS Knowledge ArchitectureUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E308BD0A22EDF72400C47F72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E308BD1F22EDF72600C47F72 /* LaunchScreen.storyboard in Resources */,
+				E308BD1C22EDF72600C47F72 /* Assets.xcassets in Resources */,
+				E308BD1722EDF72400C47F72 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E308BD2522EDF72600C47F72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E308BD3022EDF72600C47F72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E308BD0822EDF72400C47F72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E308BD1A22EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld in Sources */,
+				E308BD1422EDF72400C47F72 /* ViewController.m in Sources */,
+				E308BD2222EDF72600C47F72 /* main.m in Sources */,
+				E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E308BD2322EDF72600C47F72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E308BD2C22EDF72600C47F72 /* iOS_Knowledge_ArchitectureTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E308BD2E22EDF72600C47F72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E308BD3722EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E308BD2922EDF72600C47F72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E308BD0B22EDF72400C47F72 /* iOS Knowledge Architecture */;
+			targetProxy = E308BD2822EDF72600C47F72 /* PBXContainerItemProxy */;
+		};
+		E308BD3422EDF72600C47F72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E308BD0B22EDF72400C47F72 /* iOS Knowledge Architecture */;
+			targetProxy = E308BD3322EDF72600C47F72 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E308BD1522EDF72400C47F72 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E308BD1622EDF72400C47F72 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E308BD1D22EDF72600C47F72 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E308BD1E22EDF72600C47F72 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E308BD3922EDF72600C47F72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E308BD3A22EDF72600C47F72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E308BD3C22EDF72600C47F72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 65GEP5SQYY;
+				INFOPLIST_FILE = "iOS Knowledge Architecture/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xunli.iOS-Knowledge-Architecture";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E308BD3D22EDF72600C47F72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 65GEP5SQYY;
+				INFOPLIST_FILE = "iOS Knowledge Architecture/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xunli.iOS-Knowledge-Architecture";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E308BD3F22EDF72600C47F72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 65GEP5SQYY;
+				INFOPLIST_FILE = "iOS Knowledge ArchitectureTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xunli.iOS-Knowledge-ArchitectureTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS Knowledge Architecture.app/iOS Knowledge Architecture";
+			};
+			name = Debug;
+		};
+		E308BD4022EDF72600C47F72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 65GEP5SQYY;
+				INFOPLIST_FILE = "iOS Knowledge ArchitectureTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xunli.iOS-Knowledge-ArchitectureTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS Knowledge Architecture.app/iOS Knowledge Architecture";
+			};
+			name = Release;
+		};
+		E308BD4222EDF72600C47F72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 65GEP5SQYY;
+				INFOPLIST_FILE = "iOS Knowledge ArchitectureUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xunli.iOS-Knowledge-ArchitectureUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "iOS Knowledge Architecture";
+			};
+			name = Debug;
+		};
+		E308BD4322EDF72600C47F72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 65GEP5SQYY;
+				INFOPLIST_FILE = "iOS Knowledge ArchitectureUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xunli.iOS-Knowledge-ArchitectureUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "iOS Knowledge Architecture";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E308BD0722EDF72400C47F72 /* Build configuration list for PBXProject "iOS Knowledge Architecture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E308BD3922EDF72600C47F72 /* Debug */,
+				E308BD3A22EDF72600C47F72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E308BD3B22EDF72600C47F72 /* Build configuration list for PBXNativeTarget "iOS Knowledge Architecture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E308BD3C22EDF72600C47F72 /* Debug */,
+				E308BD3D22EDF72600C47F72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E308BD3E22EDF72600C47F72 /* Build configuration list for PBXNativeTarget "iOS Knowledge ArchitectureTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E308BD3F22EDF72600C47F72 /* Debug */,
+				E308BD4022EDF72600C47F72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E308BD4122EDF72600C47F72 /* Build configuration list for PBXNativeTarget "iOS Knowledge ArchitectureUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E308BD4222EDF72600C47F72 /* Debug */,
+				E308BD4322EDF72600C47F72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E308BD1822EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E308BD1922EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodel */,
+			);
+			currentVersion = E308BD1922EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodel */;
+			path = iOS_Knowledge_Architecture.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = E308BD0422EDF72400C47F72 /* Project object */;
+}
