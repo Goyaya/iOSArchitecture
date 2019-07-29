@@ -10,12 +10,12 @@
 		1C6E6AABDC3C5B641940665F /* libPods-iOS Knowledge ArchitectureTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4438BA14E397AA3AB9A80CD /* libPods-iOS Knowledge ArchitectureTests.a */; };
 		71F39CCCC2B2B264DC90AD3E /* libPods-iOS Knowledge Architecture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E41F45C0AABA9B59E6E13F4 /* libPods-iOS Knowledge Architecture.a */; };
 		D80561B6DE5F29E55103B099 /* libPods-iOS Knowledge ArchitectureUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AA08004B598D4B2D8608E39 /* libPods-iOS Knowledge ArchitectureUITests.a */; };
+		E308636022EF49B900675E1F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E308635F22EF49B900675E1F /* Launch Screen.storyboard */; };
+		E308636322EF4A6D00675E1F /* MasterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E308636222EF4A6D00675E1F /* MasterTableViewController.m */; };
 		E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD1022EDF72400C47F72 /* AppDelegate.m */; };
-		E308BD1422EDF72400C47F72 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD1322EDF72400C47F72 /* ViewController.m */; };
 		E308BD1722EDF72400C47F72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E308BD1522EDF72400C47F72 /* Main.storyboard */; };
 		E308BD1A22EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E308BD1822EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld */; };
 		E308BD1C22EDF72600C47F72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E308BD1B22EDF72600C47F72 /* Assets.xcassets */; };
-		E308BD1F22EDF72600C47F72 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E308BD1D22EDF72600C47F72 /* LaunchScreen.storyboard */; };
 		E308BD2222EDF72600C47F72 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD2122EDF72600C47F72 /* main.m */; };
 		E308BD2C22EDF72600C47F72 /* iOS_Knowledge_ArchitectureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD2B22EDF72600C47F72 /* iOS_Knowledge_ArchitectureTests.m */; };
 		E308BD3722EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD3622EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m */; };
@@ -47,15 +47,15 @@
 		893D2F620AAC085743AEFC73 /* Pods-iOS Knowledge ArchitectureTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS Knowledge ArchitectureTests.debug.xcconfig"; path = "Target Support Files/Pods-iOS Knowledge ArchitectureTests/Pods-iOS Knowledge ArchitectureTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B4438BA14E397AA3AB9A80CD /* libPods-iOS Knowledge ArchitectureTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iOS Knowledge ArchitectureTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0E4016EECF882DCEE06911D /* Pods-iOS Knowledge ArchitectureUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS Knowledge ArchitectureUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS Knowledge ArchitectureUITests/Pods-iOS Knowledge ArchitectureUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E308635F22EF49B900675E1F /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		E308636122EF4A6D00675E1F /* MasterTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterTableViewController.h; sourceTree = "<group>"; };
+		E308636222EF4A6D00675E1F /* MasterTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterTableViewController.m; sourceTree = "<group>"; };
 		E308BD0C22EDF72400C47F72 /* iOS Knowledge Architecture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Knowledge Architecture.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E308BD0F22EDF72400C47F72 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E308BD1022EDF72400C47F72 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		E308BD1222EDF72400C47F72 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		E308BD1322EDF72400C47F72 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E308BD1622EDF72400C47F72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E308BD1922EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iOS_Knowledge_Architecture.xcdatamodel; sourceTree = "<group>"; };
 		E308BD1B22EDF72600C47F72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E308BD1E22EDF72600C47F72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E308BD2022EDF72600C47F72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E308BD2122EDF72600C47F72 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E308BD2722EDF72600C47F72 /* iOS Knowledge ArchitectureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS Knowledge ArchitectureTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,14 +135,14 @@
 			children = (
 				E308BD0F22EDF72400C47F72 /* AppDelegate.h */,
 				E308BD1022EDF72400C47F72 /* AppDelegate.m */,
-				E308BD1222EDF72400C47F72 /* ViewController.h */,
-				E308BD1322EDF72400C47F72 /* ViewController.m */,
+				E308636122EF4A6D00675E1F /* MasterTableViewController.h */,
+				E308636222EF4A6D00675E1F /* MasterTableViewController.m */,
 				E308BD1522EDF72400C47F72 /* Main.storyboard */,
 				E308BD1B22EDF72600C47F72 /* Assets.xcassets */,
-				E308BD1D22EDF72600C47F72 /* LaunchScreen.storyboard */,
 				E308BD2022EDF72600C47F72 /* Info.plist */,
 				E308BD2122EDF72600C47F72 /* main.m */,
 				E308BD1822EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld */,
+				E308635F22EF49B900675E1F /* Launch Screen.storyboard */,
 			);
 			path = "iOS Knowledge Architecture";
 			sourceTree = "<group>";
@@ -283,7 +283,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E308BD1F22EDF72600C47F72 /* LaunchScreen.storyboard in Resources */,
+				E308636022EF49B900675E1F /* Launch Screen.storyboard in Resources */,
 				E308BD1C22EDF72600C47F72 /* Assets.xcassets in Resources */,
 				E308BD1722EDF72400C47F72 /* Main.storyboard in Resources */,
 			);
@@ -424,7 +424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E308BD1A22EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld in Sources */,
-				E308BD1422EDF72400C47F72 /* ViewController.m in Sources */,
+				E308636322EF4A6D00675E1F /* MasterTableViewController.m in Sources */,
 				E308BD2222EDF72600C47F72 /* main.m in Sources */,
 				E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */,
 			);
@@ -468,14 +468,6 @@
 				E308BD1622EDF72400C47F72 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		E308BD1D22EDF72600C47F72 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E308BD1E22EDF72600C47F72 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

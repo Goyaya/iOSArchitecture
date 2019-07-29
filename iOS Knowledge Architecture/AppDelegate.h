@@ -13,7 +13,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (readonly, strong) NSPersistentContainer *persistentContainer;
+@property (readonly, strong) NSPersistentContainer *persistentContainer API_AVAILABLE(ios(10.0));
 
 - (void)saveContext;
 
