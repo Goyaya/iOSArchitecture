@@ -6,6 +6,7 @@ PODS:
     - PNChart
     - "UITextView+Placeholder"
   - fishhook (0.2)
+  - KVOController (1.2.0)
   - LookinServer (0.9.3)
   - PNChart (0.8.9):
     - UICountingLabel (~> 1.2.0)
@@ -14,6 +15,7 @@ PODS:
 
 DEPENDENCIES:
   - DoraemonKit/Core (~> 1.1.6)
+  - KVOController
   - LookinServer
 
 SPEC REPOS:
@@ -21,6 +23,7 @@ SPEC REPOS:
     - BSBacktraceLogger
     - DoraemonKit
     - fishhook
+    - KVOController
     - LookinServer
     - PNChart
     - UICountingLabel
@@ -30,11 +33,12 @@ SPEC CHECKSUMS:
   BSBacktraceLogger: 06b983ee93a9f87d957960e9c73d660d5966b447
   DoraemonKit: efea4a8afe0a6f2aadffcf5e66010bff692c6f05
   fishhook: ea19933abfe8f2f52c55fd8b6e2718467d3ebc89
+  KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
   LookinServer: 44f1b5f32743dc61068a156ff86b5b47d0a82943
   PNChart: 84774d225c2126ded6c93d4dbe6ae98c3a73c2d2
   UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
   "UITextView+Placeholder": 0c3efd97f37ea64bde7f34cc6e90fe02e87b3909
 
-PODFILE CHECKSUM: 8316051b7a5ec976df13b7a97eafe815428f9b5d
+PODFILE CHECKSUM: 258c01538c0088b871e6bf137af96b5e86436a0b
 
 COCOAPODS: 1.6.1

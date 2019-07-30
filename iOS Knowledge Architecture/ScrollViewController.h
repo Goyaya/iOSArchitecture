@@ -1,8 +1,8 @@
 //
-//  MasterTableViewController.h
+//  ScrollViewController.h
 //  iOS Knowledge Architecture
 //
-//  Created by 高洋 on 2019/7/29.
+//  Created by 高洋 on 2019/7/30.
 //  Copyright © 2019 Gaoyang. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MasterTableViewController : UITableViewController
+@interface ScrollViewController : UIViewController
 
 @end
 
