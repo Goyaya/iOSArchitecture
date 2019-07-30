@@ -12,6 +12,7 @@
 		D80561B6DE5F29E55103B099 /* libPods-iOS Knowledge ArchitectureUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AA08004B598D4B2D8608E39 /* libPods-iOS Knowledge ArchitectureUITests.a */; };
 		E308636022EF49B900675E1F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E308635F22EF49B900675E1F /* Launch Screen.storyboard */; };
 		E308636322EF4A6D00675E1F /* MasterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E308636222EF4A6D00675E1F /* MasterTableViewController.m */; };
+		E308636622EF4BBC00675E1F /* GYPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E308636522EF4BBC00675E1F /* GYPageViewController.m */; };
 		E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD1022EDF72400C47F72 /* AppDelegate.m */; };
 		E308BD1722EDF72400C47F72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E308BD1522EDF72400C47F72 /* Main.storyboard */; };
 		E308BD1A22EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E308BD1822EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld */; };
@@ -50,6 +51,8 @@
 		E308635F22EF49B900675E1F /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		E308636122EF4A6D00675E1F /* MasterTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterTableViewController.h; sourceTree = "<group>"; };
 		E308636222EF4A6D00675E1F /* MasterTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterTableViewController.m; sourceTree = "<group>"; };
+		E308636422EF4BBC00675E1F /* GYPageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GYPageViewController.h; sourceTree = "<group>"; };
+		E308636522EF4BBC00675E1F /* GYPageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GYPageViewController.m; sourceTree = "<group>"; };
 		E308BD0C22EDF72400C47F72 /* iOS Knowledge Architecture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Knowledge Architecture.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E308BD0F22EDF72400C47F72 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E308BD1022EDF72400C47F72 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -137,6 +140,8 @@
 				E308BD1022EDF72400C47F72 /* AppDelegate.m */,
 				E308636122EF4A6D00675E1F /* MasterTableViewController.h */,
 				E308636222EF4A6D00675E1F /* MasterTableViewController.m */,
+				E308636422EF4BBC00675E1F /* GYPageViewController.h */,
+				E308636522EF4BBC00675E1F /* GYPageViewController.m */,
 				E308BD1522EDF72400C47F72 /* Main.storyboard */,
 				E308BD1B22EDF72600C47F72 /* Assets.xcassets */,
 				E308BD2022EDF72600C47F72 /* Info.plist */,
@@ -242,6 +247,7 @@
 		E308BD0422EDF72400C47F72 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = GY;
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = Gaoyang;
 				TargetAttributes = {
@@ -426,6 +432,7 @@
 				E308BD1A22EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld in Sources */,
 				E308636322EF4A6D00675E1F /* MasterTableViewController.m in Sources */,
 				E308BD2222EDF72600C47F72 /* main.m in Sources */,
+				E308636622EF4BBC00675E1F /* GYPageViewController.m in Sources */,
 				E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
