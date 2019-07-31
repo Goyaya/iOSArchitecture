@@ -7,6 +7,7 @@
 //
 
 #import "ScrollViewController.h"
+#import <NSObject+FBKVOController.h>
 
 @interface ScrollViewController () <UIScrollViewDelegate>
 
@@ -19,7 +20,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+//    self.scrollView.contentInset = UIEdgeInsetsMake(100, 100, 0, 0);
+    if (@available(iOS 11.0, *)) {
+        self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        // Fallback on earlier versions
+//        self.scrollView.safeAreaInsets
+    }
+    
+    [self.KVOControllerNonRetaining observe:self.scrollView keyPath:@"contentOffset" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
+        if (@available(iOS 11.0, *)) {
+            NSLog(@"%@ : %@ ~ %@", change[FBKVONotificationKeyPathKey], change[NSKeyValueChangeNewKey], NSStringFromUIEdgeInsets(self.scrollView.adjustedContentInset));
+        } else {
+            NSLog(@"%@ : %@", change[FBKVONotificationKeyPathKey], change[NSKeyValueChangeNewKey]);
+        }
+    }];
+    
+    [self.KVOControllerNonRetaining observe:self.scrollView keyPath:@"adjustedContentInset" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
+        NSLog(@"%@ : %@", change[FBKVONotificationKeyPathKey], change[NSKeyValueChangeNewKey]);
+        
+    }];
+    
+    [self.KVOControllerNonRetaining observe:self.scrollView keyPath:@"safeAreaInsets" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
+        NSLog(@"%@ : %@", change[FBKVONotificationKeyPathKey], change[NSKeyValueChangeNewKey]);
+        
+    }];
 }
 
 #pragma mark - scrolling
