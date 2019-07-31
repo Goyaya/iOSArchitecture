@@ -41,6 +41,8 @@
     
     self.scrollView.contentInset = UIEdgeInsetsMake(200, 0, 200, 0);
     self.scrollView.directionalLockEnabled = YES;
+    
+    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(10, 0, 10, 20);
 }
 
 #pragma mark - scrolling
