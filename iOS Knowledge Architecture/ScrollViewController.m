@@ -21,14 +21,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.scrollView.contentInset = UIEdgeInsetsMake(100, 100, 0, 0);
-    if (@available(iOS 11.0, *)) {
-        self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    } else {
-        // Fallback on earlier versions
-//        self.scrollView.safeAreaInsets
-    }
-    
     [self.KVOControllerNonRetaining observe:self.scrollView keyPath:@"contentOffset" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
         if (@available(iOS 11.0, *)) {
             NSLog(@"%@ : %@ ~ %@", change[FBKVONotificationKeyPathKey], change[NSKeyValueChangeNewKey], NSStringFromUIEdgeInsets(self.scrollView.adjustedContentInset));
@@ -46,6 +38,9 @@
         NSLog(@"%@ : %@", change[FBKVONotificationKeyPathKey], change[NSKeyValueChangeNewKey]);
         
     }];
+    
+    self.scrollView.contentInset = UIEdgeInsetsMake(200, 0, 200, 0);
+    self.scrollView.directionalLockEnabled = YES;
 }
 
 #pragma mark - scrolling
