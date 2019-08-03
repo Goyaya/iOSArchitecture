@@ -10,6 +10,7 @@
 		1C6E6AABDC3C5B641940665F /* libPods-iOS Knowledge ArchitectureTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4438BA14E397AA3AB9A80CD /* libPods-iOS Knowledge ArchitectureTests.a */; };
 		71F39CCCC2B2B264DC90AD3E /* libPods-iOS Knowledge Architecture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E41F45C0AABA9B59E6E13F4 /* libPods-iOS Knowledge Architecture.a */; };
 		D80561B6DE5F29E55103B099 /* libPods-iOS Knowledge ArchitectureUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AA08004B598D4B2D8608E39 /* libPods-iOS Knowledge ArchitectureUITests.a */; };
+		E3027EE722F54842009A7F27 /* ZoomingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3027EE622F54842009A7F27 /* ZoomingViewController.m */; };
 		E308636022EF49B900675E1F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E308635F22EF49B900675E1F /* Launch Screen.storyboard */; };
 		E308636C22F098ED00675E1F /* ScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E308636B22F098ED00675E1F /* ScrollViewController.m */; };
 		E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD1022EDF72400C47F72 /* AppDelegate.m */; };
@@ -48,6 +49,8 @@
 		893D2F620AAC085743AEFC73 /* Pods-iOS Knowledge ArchitectureTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS Knowledge ArchitectureTests.debug.xcconfig"; path = "Target Support Files/Pods-iOS Knowledge ArchitectureTests/Pods-iOS Knowledge ArchitectureTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B4438BA14E397AA3AB9A80CD /* libPods-iOS Knowledge ArchitectureTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iOS Knowledge ArchitectureTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0E4016EECF882DCEE06911D /* Pods-iOS Knowledge ArchitectureUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS Knowledge ArchitectureUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS Knowledge ArchitectureUITests/Pods-iOS Knowledge ArchitectureUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E3027EE522F54842009A7F27 /* ZoomingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZoomingViewController.h; sourceTree = "<group>"; };
+		E3027EE622F54842009A7F27 /* ZoomingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZoomingViewController.m; sourceTree = "<group>"; };
 		E308635F22EF49B900675E1F /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		E308636A22F098ED00675E1F /* ScrollViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollViewController.h; sourceTree = "<group>"; };
 		E308636B22F098ED00675E1F /* ScrollViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollViewController.m; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 				E30A560122F33FC800386AA0 /* GYScrollView.m */,
 				E308636A22F098ED00675E1F /* ScrollViewController.h */,
 				E308636B22F098ED00675E1F /* ScrollViewController.m */,
+				E3027EE522F54842009A7F27 /* ZoomingViewController.h */,
+				E3027EE622F54842009A7F27 /* ZoomingViewController.m */,
 				E308BD1522EDF72400C47F72 /* Main.storyboard */,
 				E308BD1B22EDF72600C47F72 /* Assets.xcassets */,
 				E308BD2022EDF72600C47F72 /* Info.plist */,
@@ -430,6 +435,7 @@
 			files = (
 				E308BD1A22EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld in Sources */,
 				E308BD2222EDF72600C47F72 /* main.m in Sources */,
+				E3027EE722F54842009A7F27 /* ZoomingViewController.m in Sources */,
 				E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */,
 				E308636C22F098ED00675E1F /* ScrollViewController.m in Sources */,
 				E30A560222F33FC800386AA0 /* GYScrollView.m in Sources */,
