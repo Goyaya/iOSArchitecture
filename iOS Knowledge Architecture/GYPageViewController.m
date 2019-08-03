@@ -8,6 +8,12 @@
 
 #import "GYPageViewController.h"
 
+typedef struct {
+    unsigned int mayChangeIndexTo: 1;
+    unsigned int willChangeIndexTo: 1;
+    unsigned int didChangeIndexTo: 1;
+} GYPageViewControllerDeleteCapabilities;
+
 @interface _GYPageViewControllerScrollView : UIScrollView @end
 
 @interface _GYPageViewControllerDataSource : NSObject <GYPageViewControllerDataSource>
@@ -20,10 +26,14 @@
 @end
 
 @interface GYPageViewControllerTransitionContext : NSObject
-/// from
+/// 起始索引
 @property (nonatomic, readwrite, assign) NSInteger fromIndex;
-/// to
+/// 确切的目标索引
 @property (nonatomic, readwrite, assign) NSInteger toIndex;
+/// 可能的目标索引
+@property (nonatomic, readwrite, assign) NSInteger predictIndex;
+/// 拖动过程中最新的偏移量
+@property (nonatomic, readwrite, assign) CGPoint latestOffset;
 @end
 
 @interface GYPageViewController () <
@@ -35,11 +45,12 @@ UIScrollViewDelegate
 @property (nonatomic, readwrite, strong) _GYPageViewControllerScrollView *innerScrollView;
 /// innerDataSource
 @property (nonatomic, readwrite, strong) id<GYPageViewControllerDataSource> innerDataSource;
-
+/// current display index
 @property (nonatomic, readwrite, assign) NSInteger index;
 /// transitionContext
 @property (nonatomic, readwrite, strong) GYPageViewControllerTransitionContext *transitionContext;
-
+/// delegate capability
+@property (nonatomic, readwrite, assign) GYPageViewControllerDeleteCapabilities delegateCapabilities;
 @end
 
 @implementation GYPageViewController
@@ -146,6 +157,16 @@ UIScrollViewDelegate
     });
 }
 
+- (void)setDelegate:(id<GYPageViewControllerDelegate>)delegate {
+    if (_delegate != delegate) {
+        _delegate = delegate;
+        _delegateCapabilities = (GYPageViewControllerDeleteCapabilities){};
+        _delegateCapabilities.mayChangeIndexTo = [_delegate respondsToSelector:@selector(pageViewController:mayChangeIndexTo:progress:)];
+        _delegateCapabilities.willChangeIndexTo = [_delegate respondsToSelector:@selector(pageViewController:willChangeIndexTo:)];
+        _delegateCapabilities.didChangeIndexTo = [_delegate respondsToSelector:@selector(pageViewController:didChangeIndexTo:)];
+    }
+}
+
 #pragma mark -
 
 - (void)handleScrollDirectionWhenHorizontal:(void (^_Nonnull)(void))whenHorizontal
@@ -190,22 +211,13 @@ UIScrollViewDelegate
         size = self.view.bounds.size;
     }
     [self addChildViewController:controller];
-    typeof(self) __weak weakself = self;
     [self handleScrollDirectionWhenHorizontal:^{
-        controller.view.frame = CGRectMake(weakself.innerScrollView.bounds.size.width * index + (weakself.innerScrollView.bounds.size.width - size.width) / 2, (weakself.innerScrollView.bounds.size.height - size.height) / 2, size.width, size.height);
+        controller.view.frame = CGRectMake(self.innerScrollView.bounds.size.width * index + (self.innerScrollView.bounds.size.width - size.width) / 2, (self.innerScrollView.bounds.size.height - size.height) / 2, size.width, size.height);
     } whenVertical:^{
-        controller.view.frame = CGRectMake((weakself.innerScrollView.bounds.size.width - size.width) / 2, weakself.innerScrollView.bounds.size.height * index, size.width, size.height);
+        controller.view.frame = CGRectMake((self.innerScrollView.bounds.size.width - size.width) / 2, self.innerScrollView.bounds.size.height * index, size.width, size.height);
     }];
     [self.innerScrollView addSubview:controller.view];
     [controller didMoveToParentViewController:self];
-}
-
-- (void)checkIfNeedsLoadController {
-    if (self.transitionContext == nil ||
-        self.transitionContext.fromIndex == self.transitionContext.toIndex) {
-        return;
-    }
-    [self loadViewControllerAtIndex:self.transitionContext.toIndex];
 }
 
 #pragma mark -
@@ -252,23 +264,82 @@ UIScrollViewDelegate
     return GYPageViewControllerScrollDirectionHorizontal;
 }
 
+- (void)notifyDelegateMayChangeIndexTo:(NSInteger)index progress:(float)progress {
+    if (_delegateCapabilities.mayChangeIndexTo) {
+        [_delegate pageViewController:self mayChangeIndexTo:index progress:progress];
+    }
+}
+
+- (void)notifyDelegateWillChangeIndexTo:(NSInteger)index {
+    if (_delegateCapabilities.willChangeIndexTo) {
+        [_delegate pageViewController:self willChangeIndexTo:index];
+    }
+}
+
+- (void)notifyDelegateDidChangeIndexTo:(NSInteger)index {
+    if (_delegateCapabilities.didChangeIndexTo) {
+        [_delegate pageViewController:self didChangeIndexTo:index];
+    }
+}
+
 #pragma mark -
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     if (self.transitionContext == nil) {
         self.transitionContext = [GYPageViewControllerTransitionContext new];
         self.transitionContext.fromIndex = self.index;
+        self.transitionContext.toIndex = NSNotFound;
+        self.transitionContext.predictIndex = NSNotFound;
+        self.transitionContext.latestOffset = scrollView.contentOffset;
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    // 更新预测的索引
+    CGPoint predictPoint = CGPointMake(scrollView.contentOffset.x - self.transitionContext.latestOffset.x,
+                                       scrollView.contentOffset.y - self.transitionContext.latestOffset.y);
+    float __block progress = 0;
+    [self handleScrollDirectionWhenHorizontal:^{
+        if (predictPoint.x > 0) {
+            self.transitionContext.predictIndex = self.transitionContext.fromIndex + 1;
+            progress = scrollView.contentOffset.x / (self.transitionContext.predictIndex * scrollView.bounds.size.width);
+        } else {
+            self.transitionContext.predictIndex = self.transitionContext.fromIndex - 1;
+            progress = scrollView.contentOffset.x / (self.transitionContext.predictIndex * scrollView.bounds.size.width) - 1.0;
+        }
+    } whenVertical:^{
+        if (predictPoint.y > 0) {
+            self.transitionContext.predictIndex = self.transitionContext.fromIndex + 1;
+            progress = scrollView.contentOffset.y / (self.transitionContext.predictIndex * scrollView.bounds.size.height);
+        } else {
+            self.transitionContext.predictIndex = self.transitionContext.fromIndex - 1;
+            progress = scrollView.contentOffset.y / (self.transitionContext.predictIndex * scrollView.bounds.size.height) - 1.0;
+        }
+    }];
+    [self notifyDelegateMayChangeIndexTo:self.transitionContext.predictIndex progress:progress];
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+    // 更新确切目标索引
+    CGPoint contentOffset = *targetContentOffset;
+    [self handleScrollDirectionWhenHorizontal:^{
+        self.transitionContext.toIndex = (NSInteger)(contentOffset.x / scrollView.bounds.size.width);
+    } whenVertical:^{
+        self.transitionContext.toIndex = (NSInteger)(contentOffset.y / scrollView.bounds.size.height);
+    }];
+    if (self.transitionContext.fromIndex != self.transitionContext.toIndex) {
+        [self notifyDelegateWillChangeIndexTo:self.transitionContext.toIndex];
+        [self loadViewControllerAtIndex:self.transitionContext.toIndex];
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self handleScrollDirectionWhenHorizontal:^{
-        self.transitionContext.toIndex = (NSInteger)(scrollView.contentOffset.x / scrollView.bounds.size.width);
-    } whenVertical:^{
-        self.transitionContext.toIndex = (NSInteger)(scrollView.contentOffset.y / scrollView.bounds.size.height);
-    }];
     self.index = self.transitionContext.toIndex;
-    [self checkIfNeedsLoadController];
+    if (_transitionContext.fromIndex != self.transitionContext.toIndex) {
+        [self notifyDelegateDidChangeIndexTo:self.transitionContext.toIndex];
+    }
     self.transitionContext = nil;
 }
 

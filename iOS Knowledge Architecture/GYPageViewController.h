@@ -38,6 +38,18 @@ typedef NS_ENUM(int, GYPageViewControllerScrollDirection) {
 
 @end
 
+@protocol GYPageViewControllerDelegate <NSObject>
+
+@optional;
+
+- (void)pageViewController:(GYPageViewController *)controller mayChangeIndexTo:(NSInteger)index progress:(float)progress;
+
+- (void)pageViewController:(GYPageViewController *)controller willChangeIndexTo:(NSInteger)index;
+
+- (void)pageViewController:(GYPageViewController *)controller didChangeIndexTo:(NSInteger)index;
+
+@end
+
 @protocol GYPageViewControllerAppearance <NSObject>
 
 @optional;
@@ -48,7 +60,9 @@ typedef NS_ENUM(int, GYPageViewControllerScrollDirection) {
 
 @interface GYPageViewController : UIViewController
 
-@property (nonatomic, readonly, weak, nullable) id<GYPageViewControllerDataSource> dataSource;
+@property (nonatomic, readonly, strong, nullable) id<GYPageViewControllerDataSource> dataSource;
+
+@property (nonatomic, readwrite, weak) id<GYPageViewControllerDelegate> delegate;
 
 /// appearance
 @property (nonatomic, readonly, strong) id <GYPageViewControllerAppearance> appearance;

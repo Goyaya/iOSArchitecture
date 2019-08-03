@@ -12,7 +12,7 @@
 
 #import <objc/message.h>
 
-@interface MasterTableViewController () <GYPageViewControllerDataSource>
+@interface MasterTableViewController () <GYPageViewControllerDataSource, GYPageViewControllerDelegate>
 
 /// mapper
 @property (nonatomic, readwrite, strong) NSDictionary<NSNumber *, NSString *> *selectorMapper;
@@ -58,11 +58,13 @@
 
 - (void)showPageViewControllerWithDataSource {
     GYPageViewController *controller = [[GYPageViewController alloc] initWithDataSource:self];
+    controller.delegate = self;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)showPageViewControllerWithMetadata {
     GYPageViewController *controller = [[GYPageViewController alloc] initWithControllers:self.controllers index:self.controllers.count - 1];
+    controller.delegate = self;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -86,6 +88,20 @@
 
 - (GYPageViewControllerScrollDirection)scrollDirectionInPageViewController:(GYPageViewController *)pageViewController {
     return GYPageViewControllerScrollDirectionHorizontal;
+}
+
+#pragma mark -
+
+- (void)pageViewController:(GYPageViewController *)controller mayChangeIndexTo:(NSInteger)index progress:(float)progress {
+    NSLog(@"index may change from: %ld to %ld, progress:%.2f", controller.index, index, progress);
+}
+
+- (void)pageViewController:(GYPageViewController *)controller willChangeIndexTo:(NSInteger)index {
+    NSLog(@"index will change to: %ld", index);
+}
+
+- (void)pageViewController:(GYPageViewController *)controller didChangeIndexTo:(NSInteger)index {
+    NSLog(@"index did change to: %ld", index);
 }
 
 #pragma mark -

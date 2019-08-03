@@ -30,7 +30,7 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QOO-4w-RHw">
                     <rect key="frame" x="331" y="0.0" width="44" height="44"/>
-                    <color key="backgroundColor" red="0.99943464989999997" green="0.3483529091" blue="0.018290972339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="44" id="CXf-es-sce"/>
                         <constraint firstAttribute="height" constant="44" id="k8z-dM-p6x"/>
@@ -38,7 +38,7 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U5h-Al-DXv">
                     <rect key="frame" x="0.0" y="623" width="44" height="44"/>
-                    <color key="backgroundColor" red="0.99943464989999997" green="0.3483529091" blue="0.018290972339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.83743780850000005" green="0.29569467469999999" blue="0.58161816420000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="44" id="sR9-5a-jBF"/>
                         <constraint firstAttribute="height" constant="44" id="xXw-M7-Bbz"/>
@@ -46,7 +46,7 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G4W-lg-ydq">
                     <rect key="frame" x="331" y="623" width="44" height="44"/>
-                    <color key="backgroundColor" red="0.99943464989999997" green="0.3483529091" blue="0.018290972339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="44" id="CoK-Oy-AQo"/>
                         <constraint firstAttribute="height" constant="44" id="njN-x3-nxb"/>
