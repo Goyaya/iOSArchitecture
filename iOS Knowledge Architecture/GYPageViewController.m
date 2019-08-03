@@ -8,32 +8,49 @@
 
 #import "GYPageViewController.h"
 
-@interface _GYPageViewControllerScrollView : UIScrollView
-
-@end
+@interface _GYPageViewControllerScrollView : UIScrollView @end
 
 @interface _GYPageViewControllerDataSource : NSObject <GYPageViewControllerDataSource>
 
 @property (nonatomic, readwrite, copy) NSArray<UIViewController *> *array;
 - (instancetype)initWithArray:(NSArray<UIViewController *> *)array;
+/// index
+@property (nonatomic, readwrite, assign) NSInteger index;
 
 @end
 
-@interface GYPageViewController ()
+@interface GYPageViewControllerTransitionContext : NSObject
+/// from
+@property (nonatomic, readwrite, assign) NSInteger fromIndex;
+/// to
+@property (nonatomic, readwrite, assign) NSInteger toIndex;
+@end
+
+@interface GYPageViewController () <
+UIScrollViewDelegate
+, GYPageViewControllerAppearance
+>
 
 /// inner scrollview
 @property (nonatomic, readwrite, strong) _GYPageViewControllerScrollView *innerScrollView;
 /// innerDataSource
 @property (nonatomic, readwrite, strong) id<GYPageViewControllerDataSource> innerDataSource;
 
+@property (nonatomic, readwrite, assign) NSInteger index;
+/// transitionContext
+@property (nonatomic, readwrite, strong) GYPageViewControllerTransitionContext *transitionContext;
+
 @end
 
 @implementation GYPageViewController
 
-- (instancetype)initWithControllers:(NSArray<UIViewController *> *)controllers {
+- (instancetype)initWithControllers:(NSArray<UIViewController *> *)controllers index:(NSInteger)index {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _controllers = [controllers copy];
+        _GYPageViewControllerDataSource *dataSource = [[_GYPageViewControllerDataSource alloc] initWithArray:controllers];
+        dataSource.index = index;
+        _innerDataSource = dataSource;
     }
     return self;
 }
@@ -48,20 +65,212 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.innerScrollView];
     self.innerScrollView.frame = self.view.bounds;
     self.innerScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
+    [self updateScrollViewContentSize];
+    [self setIndex:[self indexOfFirstDisplayInPageViewController] animation:NO];
 }
 
-#pragma mark - method forward
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self updateScrollViewContentSize];
+}
 
-/// 做DataSource的方法转发
-- (id)forwardingTargetForSelector:(SEL)aSelector {
-    if (_dataSource) {
-        return nil;
+- (void)viewWillTransitionToSize:(CGSize)targetSize withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:targetSize withTransitionCoordinator:coordinator];
+    
+    NSInteger itemCount = [self numberOfItemsInPageViewController];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        [self handleScrollDirectionWhenHorizontal:^{
+            // contentSize
+            self.innerScrollView.contentSize = CGSizeMake(targetSize.width * itemCount, 0);
+            // childControllers' view frame
+            [self.childViewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull controller, NSUInteger idx, BOOL * _Nonnull stop) {
+                CGSize size = controller.preferredContentSize;
+                if (CGSizeEqualToSize(CGSizeZero, size)) {
+                    size = targetSize;
+                }
+                controller.view.frame = CGRectMake(idx * targetSize.width + (targetSize.width - size.width) / 2, (targetSize.height - size.height) / 2, size.width, size.height);
+            }];
+            // offset
+            self.innerScrollView.contentOffset = CGPointMake(self.index * targetSize.width, 0);
+        } whenVertical:^{
+            
+            // contentSize
+            self.innerScrollView.contentSize = CGSizeMake(0, targetSize.height * itemCount);
+            // childControllers' view frame
+            [self.childViewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull controller, NSUInteger idx, BOOL * _Nonnull stop) {
+                CGSize size = controller.preferredContentSize;
+                if (CGSizeEqualToSize(CGSizeZero, size)) {
+                    size = targetSize;
+                }
+                controller.view.frame = CGRectMake((targetSize.width - size.width) / 2, idx * targetSize.height + (targetSize.height - size.height) / 2, size.width, size.height);
+            }];
+            // offset
+            self.innerScrollView.contentOffset = CGPointMake(0, self.index * targetSize.height);
+        }];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        
+    }];
+}
+
+- (void)dealloc {
+    
+}
+
+#pragma mark - public
+
+- (void)setIndex:(NSInteger)index animation:(BOOL)animation {
+    NSInteger itemCount = [self numberOfItemsInPageViewController];
+    NSParameterAssert(index < itemCount && index > -1);
+    _index = index;
+    // offset
+    [self handleScrollDirectionWhenHorizontal:^{
+        [self.innerScrollView setContentOffset:CGPointMake(self.innerScrollView.bounds.size.width * index, 0) animated:animation];
+    } whenVertical:^{
+        [self.innerScrollView setContentOffset:CGPointMake(0, self.innerScrollView.bounds.size.height * index) animated:animation];
+    }];
+    // controller
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self loadViewControllerAtIndex:index];
+    });
+}
+
+#pragma mark -
+
+- (void)handleScrollDirectionWhenHorizontal:(void (^_Nonnull)(void))whenHorizontal
+                               whenVertical:(void (^_Nonnull)(void))whenVertical {
+    GYPageViewControllerScrollDirection direction = [self scrollDirectionInPageViewController];
+    switch (direction) {
+        case GYPageViewControllerScrollDirectionHorizontal: {
+            whenHorizontal();
+            break;
+        }
+        case GYPageViewControllerScrollDirectionVertical: {
+            whenVertical();
+            break;
+        }
     }
-    return self.innerDataSource;
+}
+
+- (void)updateScrollViewContentSize {
+    NSInteger itemCount = [self numberOfItemsInPageViewController];
+    [self handleScrollDirectionWhenHorizontal:^{
+        self.innerScrollView.contentSize = CGSizeMake(self.innerScrollView.bounds.size.width * itemCount, 0);
+    } whenVertical:^{
+        self.innerScrollView.contentSize = CGSizeMake(0, self.innerScrollView.bounds.size.height * itemCount);
+    }];
+}
+
+- (void)loadViewControllerAtIndex:(NSInteger)index {
+    UIViewController *controller = [self controllerAtIndexNoCheck:index];
+    NSAssert(controller.parentViewController == nil, @"controller is already has a parent");
+    if (controller.parentViewController != nil) {
+        [controller willMoveToParentViewController:nil];
+        [controller.view removeFromSuperview];
+        [controller removeFromParentViewController];
+    }
+    
+    CGSize size = controller.preferredContentSize;
+    if (CGSizeEqualToSize(CGSizeZero, size)) {
+        size = self.view.bounds.size;
+    }
+    [self addChildViewController:controller];
+    typeof(self) __weak weakself = self;
+    [self handleScrollDirectionWhenHorizontal:^{
+        controller.view.frame = CGRectMake(weakself.innerScrollView.bounds.size.width * index + (weakself.innerScrollView.bounds.size.width - size.width) / 2, (weakself.innerScrollView.bounds.size.height - size.height) / 2, size.width, size.height);
+    } whenVertical:^{
+        controller.view.frame = CGRectMake((weakself.innerScrollView.bounds.size.width - size.width) / 2, weakself.innerScrollView.bounds.size.height * index, size.width, size.height);
+    }];
+    [self.innerScrollView addSubview:controller.view];
+    [controller didMoveToParentViewController:self];
+}
+
+- (void)checkIfNeedsLoadController {
+    if (self.transitionContext == nil ||
+        self.transitionContext.fromIndex == self.transitionContext.toIndex) {
+        return;
+    }
+    [self loadViewControllerAtIndex:self.transitionContext.toIndex];
+}
+
+#pragma mark -
+
+- (NSInteger)numberOfItemsInPageViewController {
+    if (_dataSource) {
+        return [_dataSource numberOfItemsInPageViewController:self];
+    }
+    if (_innerDataSource) {
+        return [_innerDataSource numberOfItemsInPageViewController:self];
+    }
+    return 0;
+}
+
+- (NSInteger)indexOfFirstDisplayInPageViewController {
+    if (_dataSource) {
+        return [_dataSource indexOfFirstDisplayInPageViewController:self];
+    }
+    if (_innerDataSource) {
+        return [_innerDataSource indexOfFirstDisplayInPageViewController:self];
+    }
+    return 0;
+}
+
+- (UIViewController *)controllerAtIndexNoCheck:(NSInteger)index {
+    UIViewController *controller = nil;
+    if (_dataSource) {
+        controller = [_dataSource pageViewController:self controllerAtIndex:index];
+    }
+    if (_innerDataSource) {
+        controller = [_innerDataSource pageViewController:self controllerAtIndex:index];
+    }
+    NSAssert(controller, @"must have a view controller");
+    return controller;
+}
+
+- (GYPageViewControllerScrollDirection)scrollDirectionInPageViewController {
+    if (_dataSource && [_dataSource respondsToSelector:@selector(scrollDirectionInPageViewController:)]) {
+        return [_dataSource scrollDirectionInPageViewController:self];
+    }
+    if (_innerDataSource) {
+        return [_innerDataSource scrollDirectionInPageViewController:self];
+    }
+    return GYPageViewControllerScrollDirectionHorizontal;
+}
+
+#pragma mark -
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (self.transitionContext == nil) {
+        self.transitionContext = [GYPageViewControllerTransitionContext new];
+        self.transitionContext.fromIndex = self.index;
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self handleScrollDirectionWhenHorizontal:^{
+        self.transitionContext.toIndex = (NSInteger)(scrollView.contentOffset.x / scrollView.bounds.size.width);
+    } whenVertical:^{
+        self.transitionContext.toIndex = (NSInteger)(scrollView.contentOffset.y / scrollView.bounds.size.height);
+    }];
+    self.index = self.transitionContext.toIndex;
+    [self checkIfNeedsLoadController];
+    self.transitionContext = nil;
+}
+
+
+#pragma mark - appearance
+
+- (void)setShowsVerticalScrollIndicator:(BOOL)ifNeeds {
+    self.innerScrollView.showsVerticalScrollIndicator = ifNeeds;
+}
+
+- (void)setShowsHorizontalScrollIndicator:(BOOL)ifNeeds {
+    self.innerScrollView.showsHorizontalScrollIndicator = ifNeeds;
 }
 
 #pragma mark -
@@ -69,6 +278,15 @@
 - (_GYPageViewControllerScrollView *)innerScrollView {
     if (_innerScrollView == nil) {
         _innerScrollView = [[_GYPageViewControllerScrollView alloc] init];
+        _innerScrollView.pagingEnabled = YES;
+        _innerScrollView.showsVerticalScrollIndicator = NO;
+        _innerScrollView.showsHorizontalScrollIndicator = NO;
+        _innerScrollView.delegate = self;
+        if (@available(iOS 11.0, *)) {
+            _innerScrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        } else {
+            self.automaticallyAdjustsScrollViewInsets = NO;
+        }
     }
     return _innerScrollView;
 }
@@ -101,6 +319,27 @@
 
 - (nonnull UIViewController *)pageViewController:(nonnull GYPageViewController *)controller controllerAtIndex:(NSInteger)index {
     return _array[index];
+}
+
+- (GYPageViewControllerScrollDirection)scrollDirectionInPageViewController:(GYPageViewController *)pageViewController {
+    return GYPageViewControllerScrollDirectionHorizontal;
+}
+
+- (NSInteger)indexOfFirstDisplayInPageViewController:(nonnull GYPageViewController *)pageViewController {
+    return _index;
+}
+
+@end
+
+@implementation GYPageViewControllerTransitionContext
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _fromIndex = NSNotFound;
+        _toIndex = NSNotFound;
+    }
+    return self;
 }
 
 @end

@@ -10,6 +10,9 @@
 		1C6E6AABDC3C5B641940665F /* libPods-iOS Knowledge ArchitectureTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4438BA14E397AA3AB9A80CD /* libPods-iOS Knowledge ArchitectureTests.a */; };
 		71F39CCCC2B2B264DC90AD3E /* libPods-iOS Knowledge Architecture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E41F45C0AABA9B59E6E13F4 /* libPods-iOS Knowledge Architecture.a */; };
 		D80561B6DE5F29E55103B099 /* libPods-iOS Knowledge ArchitectureUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AA08004B598D4B2D8608E39 /* libPods-iOS Knowledge ArchitectureUITests.a */; };
+		E3027EEA22F5557D009A7F27 /* GYDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3027EE922F5557D009A7F27 /* GYDetailViewController.m */; };
+		E3027EED22F56AC2009A7F27 /* UIColor+GYComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3027EEC22F56AC2009A7F27 /* UIColor+GYComponent.m */; };
+		E3027EEF22F59C38009A7F27 /* GYDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3027EEE22F59C38009A7F27 /* GYDetailViewController.xib */; };
 		E308636022EF49B900675E1F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E308635F22EF49B900675E1F /* Launch Screen.storyboard */; };
 		E308636322EF4A6D00675E1F /* MasterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E308636222EF4A6D00675E1F /* MasterTableViewController.m */; };
 		E308636622EF4BBC00675E1F /* GYPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E308636522EF4BBC00675E1F /* GYPageViewController.m */; };
@@ -48,6 +51,11 @@
 		893D2F620AAC085743AEFC73 /* Pods-iOS Knowledge ArchitectureTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS Knowledge ArchitectureTests.debug.xcconfig"; path = "Target Support Files/Pods-iOS Knowledge ArchitectureTests/Pods-iOS Knowledge ArchitectureTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B4438BA14E397AA3AB9A80CD /* libPods-iOS Knowledge ArchitectureTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iOS Knowledge ArchitectureTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0E4016EECF882DCEE06911D /* Pods-iOS Knowledge ArchitectureUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS Knowledge ArchitectureUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS Knowledge ArchitectureUITests/Pods-iOS Knowledge ArchitectureUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E3027EE822F5557D009A7F27 /* GYDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GYDetailViewController.h; sourceTree = "<group>"; };
+		E3027EE922F5557D009A7F27 /* GYDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GYDetailViewController.m; sourceTree = "<group>"; };
+		E3027EEB22F56AC2009A7F27 /* UIColor+GYComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+GYComponent.h"; sourceTree = "<group>"; };
+		E3027EEC22F56AC2009A7F27 /* UIColor+GYComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+GYComponent.m"; sourceTree = "<group>"; };
+		E3027EEE22F59C38009A7F27 /* GYDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GYDetailViewController.xib; sourceTree = "<group>"; };
 		E308635F22EF49B900675E1F /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		E308636122EF4A6D00675E1F /* MasterTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterTableViewController.h; sourceTree = "<group>"; };
 		E308636222EF4A6D00675E1F /* MasterTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterTableViewController.m; sourceTree = "<group>"; };
@@ -138,10 +146,15 @@
 			children = (
 				E308BD0F22EDF72400C47F72 /* AppDelegate.h */,
 				E308BD1022EDF72400C47F72 /* AppDelegate.m */,
+				E3027EEB22F56AC2009A7F27 /* UIColor+GYComponent.h */,
+				E3027EEC22F56AC2009A7F27 /* UIColor+GYComponent.m */,
 				E308636122EF4A6D00675E1F /* MasterTableViewController.h */,
 				E308636222EF4A6D00675E1F /* MasterTableViewController.m */,
 				E308636422EF4BBC00675E1F /* GYPageViewController.h */,
 				E308636522EF4BBC00675E1F /* GYPageViewController.m */,
+				E3027EE822F5557D009A7F27 /* GYDetailViewController.h */,
+				E3027EE922F5557D009A7F27 /* GYDetailViewController.m */,
+				E3027EEE22F59C38009A7F27 /* GYDetailViewController.xib */,
 				E308BD1522EDF72400C47F72 /* Main.storyboard */,
 				E308BD1B22EDF72600C47F72 /* Assets.xcassets */,
 				E308BD2022EDF72600C47F72 /* Info.plist */,
@@ -290,6 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E308636022EF49B900675E1F /* Launch Screen.storyboard in Resources */,
+				E3027EEF22F59C38009A7F27 /* GYDetailViewController.xib in Resources */,
 				E308BD1C22EDF72600C47F72 /* Assets.xcassets in Resources */,
 				E308BD1722EDF72400C47F72 /* Main.storyboard in Resources */,
 			);
@@ -430,7 +444,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E308BD1A22EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld in Sources */,
+				E3027EEA22F5557D009A7F27 /* GYDetailViewController.m in Sources */,
 				E308636322EF4A6D00675E1F /* MasterTableViewController.m in Sources */,
+				E3027EED22F56AC2009A7F27 /* UIColor+GYComponent.m in Sources */,
 				E308BD2222EDF72600C47F72 /* main.m in Sources */,
 				E308636622EF4BBC00675E1F /* GYPageViewController.m in Sources */,
 				E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */,

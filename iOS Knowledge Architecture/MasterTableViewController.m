@@ -7,8 +7,17 @@
 //
 
 #import "MasterTableViewController.h"
+#import "GYPageViewController.h"
+#import "GYDetailViewController.h"
 
-@interface MasterTableViewController ()
+#import <objc/message.h>
+
+@interface MasterTableViewController () <GYPageViewControllerDataSource>
+
+/// mapper
+@property (nonatomic, readwrite, strong) NSDictionary<NSNumber *, NSString *> *selectorMapper;
+/// controllers
+@property (nonatomic, readwrite, strong) NSArray<UIViewController *> *controllers;
 
 @end
 
@@ -22,72 +31,68 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.selectorMapper = @{
+                            @(0): NSStringFromSelector(@selector(showPageViewController)),
+                            @(1): NSStringFromSelector(@selector(showTransitionDemo))
+                            };
+    self.controllers = @[
+                         ({
+                             GYDetailViewController *cotnroller = [[GYDetailViewController alloc] init];
+                             cotnroller.title = @"李白";
+                             cotnroller;
+                         }),
+                         ({
+                             GYDetailViewController *cotnroller = [[GYDetailViewController alloc] init];
+                             cotnroller.title = @"杜甫";
+                             cotnroller;
+                         }),
+                         ({
+                             GYDetailViewController *cotnroller = [[GYDetailViewController alloc] init];
+                             cotnroller.title = @"白居易";
+                             cotnroller;
+                         })
+                         ];
 }
 
-#pragma mark - Table view data source
+- (void)showPageViewController {
+    GYPageViewController *controller = [[GYPageViewController alloc] initWithDataSource:self];
+    [self.navigationController pushViewController:controller animated:YES];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [controller setIndex:1 animation:YES];
+    });
+}
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
+- (void)showTransitionDemo {
+    
+}
+
+#pragma mark -
+
+- (NSInteger)numberOfItemsInPageViewController:(GYPageViewController *)pageViewController {
+    return self.controllers.count;
+}
+
+- (NSInteger)indexOfFirstDisplayInPageViewController:(GYPageViewController *)pageViewController {
     return 0;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+- (UIViewController *)pageViewController:(GYPageViewController *)controller controllerAtIndex:(NSInteger)index {
+    return self.controllers[index];
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+- (GYPageViewControllerScrollDirection)scrollDirectionInPageViewController:(GYPageViewController *)pageViewController {
+    return GYPageViewControllerScrollDirectionHorizontal;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+#pragma mark -
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *selString = self.selectorMapper[@(indexPath.row)];
+    SEL sel = NSSelectorFromString(selString);
+    if ([self respondsToSelector:sel]) {
+        ((void (*)(id, SEL))objc_msgSend)(self, sel);
+    }
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
