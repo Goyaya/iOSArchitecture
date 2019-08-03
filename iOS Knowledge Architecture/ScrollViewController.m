@@ -8,11 +8,13 @@
 
 #import "ScrollViewController.h"
 #import <NSObject+FBKVOController.h>
+#import "GYScrollView.h"
 
 @interface ScrollViewController () <UIScrollViewDelegate>
 
+@property (weak, nonatomic) IBOutlet GYScrollView *customScrollView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UISwitch *shouldBeginSwitch;
 
 @end
 
@@ -21,101 +23,44 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.KVOControllerNonRetaining observe:self.scrollView keyPath:@"contentOffset" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
-        if (@available(iOS 11.0, *)) {
-            NSLog(@"%@ : %@ ~ %@", change[FBKVONotificationKeyPathKey], change[NSKeyValueChangeNewKey], NSStringFromUIEdgeInsets(self.scrollView.adjustedContentInset));
-        } else {
-            NSLog(@"%@ : %@", change[FBKVONotificationKeyPathKey], change[NSKeyValueChangeNewKey]);
-        }
-    }];
+    self.customScrollView.touchesShouldBegin = YES;
+    self.customScrollView.touchesShouldCancel = YES;
     
-    [self.KVOControllerNonRetaining observe:self.scrollView keyPath:@"adjustedContentInset" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
-        NSLog(@"%@ : %@", change[FBKVONotificationKeyPathKey], change[NSKeyValueChangeNewKey]);
-        
-    }];
-    
-    [self.KVOControllerNonRetaining observe:self.scrollView keyPath:@"safeAreaInsets" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
-        NSLog(@"%@ : %@", change[FBKVONotificationKeyPathKey], change[NSKeyValueChangeNewKey]);
-        
-    }];
-    
-    self.scrollView.contentInset = UIEdgeInsetsMake(200, 0, 200, 0);
-    self.scrollView.directionalLockEnabled = YES;
-    
-    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(10, 0, 10, 20);
+    self.customScrollView.delegate = self;
+    self.scrollView.delegate = self;
 }
 
-#pragma mark - scrolling
-// any offset changes
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     NSLog(@"%s", __func__);
 }
-
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    NSLog(@"%s", __func__);
-}   // called on finger up as we are moving
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSLog(@"%s", __func__);
-}     // called when scroll view grinds to a halt
-
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    NSLog(@"%s", __func__);
-} // called when setContentOffset/scrollRectVisible:animated: finishes. not called if not animating
-
-
-#pragma mark - dragging
-// called on start of dragging (may require some time and or distance to move)
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    NSLog(@"%s", __func__);
-}
-// called on finger up if the user dragged. velocity is in points/millisecond. targetContentOffset may be changed to adjust where the scroll view comes to rest
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    NSLog(@"%s", __func__);
-}
-// called on finger up if the user dragged. decelerate is true if it will continue moving afterwards
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    NSLog(@"%s", __func__);
+- (IBAction)openShouldBegin:(id)sender {
+    self.shouldBeginSwitch.on = YES;
+    [self shouldBeginChanged:self.shouldBeginSwitch];
 }
 
-#pragma mark - zooming
-- (nullable UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-    NSLog(@"%s", __func__);
-    return self.imageView;
-}     // return a view that will be scaled. if delegate returns nil, nothing happens
-
-- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(nullable UIView *)view {
-    
-    NSLog(@"%s", __func__);
-} // called before the scroll view begins zooming its content
-
-- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    NSLog(@"%s", __func__);
+- (IBAction)changeCustomScrollViewDelaysContentTouches:(UISwitch *)sender {
+    self.customScrollView.delaysContentTouches = sender.isOn;
 }
 
-- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(nullable UIView *)view atScale:(CGFloat)scale {
-    
-    NSLog(@"%s", __func__);
-}// scale between minimum and maximum. called after any 'bounce' animations
+- (IBAction)changeCustomScrollViewCanCancelContentTouches:(UISwitch *)sender {
+    self.customScrollView.canCancelContentTouches = sender.isOn;
+}
 
-#pragma mark - top touch
-- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
-    NSLog(@"%s", __func__);
-    return YES;
-}   // return a yes if you want to scroll to the top. if not defined, assumes YES
+- (IBAction)shouldBeginChanged:(UISwitch *)sender {
+    self.customScrollView.touchesShouldBegin = sender.isOn;
+}
 
-- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
-    NSLog(@"%s", __func__);
-    
-}      // called when scrolling animation finished. may be called immediately if already at top
+- (IBAction)shouldCancelChanged:(UISwitch *)sender {
+    self.customScrollView.touchesShouldCancel = sender.isOn;
+}
 
-#pragma mark - adjustedContentInset
-/* Also see -[UIScrollView adjustedContentInsetDidChange]
- */
-- (void)scrollViewDidChangeAdjustedContentInset:(UIScrollView *)scrollView {
-    
-    NSLog(@"%s", __func__);
+
+- (IBAction)changeScrollViewDelaysContentTouches:(UISwitch *)sender {
+    self.scrollView.delaysContentTouches = sender.isOn;
+}
+
+- (IBAction)changeScrollViewCanCancelContentTouches:(UISwitch *)sender {
+    self.scrollView.canCancelContentTouches = sender.isOn;
 }
 
 @end
