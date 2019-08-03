@@ -89,27 +89,33 @@ UIScrollViewDelegate
             // contentSize
             self.innerScrollView.contentSize = CGSizeMake(targetSize.width * itemCount, 0);
             // childControllers' view frame
-            [self.childViewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull controller, NSUInteger idx, BOOL * _Nonnull stop) {
-                CGSize size = controller.preferredContentSize;
-                if (CGSizeEqualToSize(CGSizeZero, size)) {
-                    size = targetSize;
+            for (NSInteger i = 0; i < itemCount; ++i) {
+                UIViewController *controller = [self controllerAtIndexNoCheck:i];
+                // 已经加入子控制器
+                if (controller.parentViewController == self) {
+                    CGSize size = controller.preferredContentSize;
+                    if (CGSizeEqualToSize(CGSizeZero, size)) {
+                        size = targetSize;
+                    }
+                    controller.view.frame = CGRectMake(i * targetSize.width + (targetSize.width - size.width) / 2, (targetSize.height - size.height) / 2, size.width, size.height);
                 }
-                controller.view.frame = CGRectMake(idx * targetSize.width + (targetSize.width - size.width) / 2, (targetSize.height - size.height) / 2, size.width, size.height);
-            }];
+            }
             // offset
             self.innerScrollView.contentOffset = CGPointMake(self.index * targetSize.width, 0);
         } whenVertical:^{
-            
             // contentSize
             self.innerScrollView.contentSize = CGSizeMake(0, targetSize.height * itemCount);
             // childControllers' view frame
-            [self.childViewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull controller, NSUInteger idx, BOOL * _Nonnull stop) {
-                CGSize size = controller.preferredContentSize;
-                if (CGSizeEqualToSize(CGSizeZero, size)) {
-                    size = targetSize;
+            for (NSInteger i = 0; i < itemCount; ++i) {
+                UIViewController *controller = [self controllerAtIndexNoCheck:i];
+                if (controller.parentViewController == self) {
+                    CGSize size = controller.preferredContentSize;
+                    if (CGSizeEqualToSize(CGSizeZero, size)) {
+                        size = targetSize;
+                    }
+                    controller.view.frame = CGRectMake((targetSize.width - size.width) / 2, i * targetSize.height + (targetSize.height - size.height) / 2, size.width, size.height);
                 }
-                controller.view.frame = CGRectMake((targetSize.width - size.width) / 2, idx * targetSize.height + (targetSize.height - size.height) / 2, size.width, size.height);
-            }];
+            }
             // offset
             self.innerScrollView.contentOffset = CGPointMake(0, self.index * targetSize.height);
         }];
@@ -168,7 +174,11 @@ UIScrollViewDelegate
 
 - (void)loadViewControllerAtIndex:(NSInteger)index {
     UIViewController *controller = [self controllerAtIndexNoCheck:index];
-    NSAssert(controller.parentViewController == nil, @"controller is already has a parent");
+    // 已经加入直接返回
+    if (controller.parentViewController == self) {
+        return;
+    }
+    
     if (controller.parentViewController != nil) {
         [controller willMoveToParentViewController:nil];
         [controller.view removeFromSuperview];

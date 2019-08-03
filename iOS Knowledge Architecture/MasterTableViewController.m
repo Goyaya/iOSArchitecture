@@ -33,8 +33,9 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.selectorMapper = @{
-                            @(0): NSStringFromSelector(@selector(showPageViewController)),
-                            @(1): NSStringFromSelector(@selector(showTransitionDemo))
+                            @(0): NSStringFromSelector(@selector(showPageViewControllerWithDataSource)),
+                            @(1): NSStringFromSelector(@selector(showPageViewControllerWithMetadata)),
+                            @(2): NSStringFromSelector(@selector(showTransitionDemo))
                             };
     self.controllers = @[
                          ({
@@ -55,12 +56,14 @@
                          ];
 }
 
-- (void)showPageViewController {
+- (void)showPageViewControllerWithDataSource {
     GYPageViewController *controller = [[GYPageViewController alloc] initWithDataSource:self];
     [self.navigationController pushViewController:controller animated:YES];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [controller setIndex:1 animation:YES];
-    });
+}
+
+- (void)showPageViewControllerWithMetadata {
+    GYPageViewController *controller = [[GYPageViewController alloc] initWithControllers:self.controllers index:self.controllers.count - 1];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)showTransitionDemo {
