@@ -32,6 +32,10 @@ typedef struct {
 @property (nonatomic, readwrite, assign) NSInteger toIndex;
 /// 可能的目标索引
 @property (nonatomic, readwrite, assign) NSInteger predictIndex;
+/// 正向距离 - 向左
+@property (nonatomic, readwrite, assign) CGFloat forwardDistance;
+/// 反向距离 - 向右
+@property (nonatomic, readwrite, assign) CGFloat backwardDistance;
 /// 拖动过程中最新的偏移量
 @property (nonatomic, readwrite, assign) CGPoint latestOffset;
 @end
@@ -51,8 +55,16 @@ UIScrollViewDelegate
 @property (nonatomic, readwrite, strong) GYPageViewControllerTransitionContext *transitionContext;
 /// delegate capability
 @property (nonatomic, readwrite, assign) GYPageViewControllerDeleteCapabilities delegateCapabilities;
+/// setIndexComplete
+@property (nonatomic, readwrite, copy) void (^setIndexComplete)(void);
 @end
 
+
+/**
+ * 在切换控制器时，区分两种触发情况:
+ * 1. 手势驱动，使用 scrollView相关代理完成整个transition
+ * 2. 通过`-setIndex:animation:`
+*/
 @implementation GYPageViewController
 
 - (instancetype)initWithControllers:(NSArray<UIViewController *> *)controllers index:(NSInteger)index {
@@ -78,11 +90,14 @@ UIScrollViewDelegate
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.innerScrollView];
+    
     self.innerScrollView.frame = self.view.bounds;
     self.innerScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.innerScrollView.contentOffset = CGPointMake(1, 1);
     
+    self.index = NSNotFound;
     [self updateScrollViewContentSize];
-    [self setIndex:[self indexOfFirstDisplayInPageViewController] animation:NO];
+    [self setIndex:[self indexOfFirstDisplayInPageViewController] animation:NO complete:nil];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -136,14 +151,16 @@ UIScrollViewDelegate
 }
 
 - (void)dealloc {
-    
+    NSLog(@"%s", __func__);
 }
 
 #pragma mark - public
 
-- (void)setIndex:(NSInteger)index animation:(BOOL)animation {
+- (void)setIndex:(NSInteger)index animation:(BOOL)animation complete:(void (^_Nullable)(void))complete {
     NSInteger itemCount = [self numberOfItemsInPageViewController];
     NSParameterAssert(index < itemCount && index > -1);
+    
+    [self loadViewControllerAtIndex:index];
     _index = index;
     // offset
     [self handleScrollDirectionWhenHorizontal:^{
@@ -151,10 +168,14 @@ UIScrollViewDelegate
     } whenVertical:^{
         [self.innerScrollView setContentOffset:CGPointMake(0, self.innerScrollView.bounds.size.height * index) animated:animation];
     }];
-    // controller
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self loadViewControllerAtIndex:index];
-    });
+    if (complete == nil) {
+        return;
+    }
+    if (animation) {
+        _setIndexComplete = [complete copy];
+    } else {
+        complete();
+    }
 }
 
 - (void)setDelegate:(id<GYPageViewControllerDelegate>)delegate {
@@ -218,6 +239,22 @@ UIScrollViewDelegate
     }];
     [self.innerScrollView addSubview:controller.view];
     [controller didMoveToParentViewController:self];
+}
+
+- (void)beginTransition {
+    if (self.transitionContext == nil) {
+        self.transitionContext = [GYPageViewControllerTransitionContext new];
+        self.transitionContext.fromIndex = self.index;
+        self.transitionContext.toIndex = NSNotFound;
+        self.transitionContext.predictIndex = NSNotFound;
+        self.transitionContext.forwardDistance = 0;
+        self.transitionContext.backwardDistance = 0;
+        self.transitionContext.latestOffset = self.innerScrollView.contentOffset;
+    }
+}
+
+- (void)endTransition {
+    self.transitionContext = nil;
 }
 
 #pragma mark -
@@ -285,35 +322,71 @@ UIScrollViewDelegate
 #pragma mark -
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if (self.transitionContext == nil) {
-        self.transitionContext = [GYPageViewControllerTransitionContext new];
-        self.transitionContext.fromIndex = self.index;
-        self.transitionContext.toIndex = NSNotFound;
-        self.transitionContext.predictIndex = NSNotFound;
-        self.transitionContext.latestOffset = scrollView.contentOffset;
-    }
+    [self beginTransition];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    // 不在手势驱动的transition过程中
+    if (self.transitionContext == nil) {
+        return;
+    }
     // 更新预测的索引
     CGPoint predictPoint = CGPointMake(scrollView.contentOffset.x - self.transitionContext.latestOffset.x,
                                        scrollView.contentOffset.y - self.transitionContext.latestOffset.y);
+    CGFloat distance = fabs(predictPoint.x);
+    self.transitionContext.latestOffset = scrollView.contentOffset;
     float __block progress = 0;
     [self handleScrollDirectionWhenHorizontal:^{
-        if (predictPoint.x > 0) {
-            self.transitionContext.predictIndex = self.transitionContext.fromIndex + 1;
-            progress = scrollView.contentOffset.x / (self.transitionContext.predictIndex * scrollView.bounds.size.width);
-        } else {
-            self.transitionContext.predictIndex = self.transitionContext.fromIndex - 1;
-            progress = scrollView.contentOffset.x / (self.transitionContext.predictIndex * scrollView.bounds.size.width) - 1.0;
+        if (predictPoint.x > 0) { // 左移
+            if (self.transitionContext.backwardDistance > 0) {
+                // 之前存在右移行为, 预测向右移动，则预测索引不用更新，只是右移的进度变小
+                self.transitionContext.backwardDistance -= distance;
+                // self.transitionContext.predictIndex = self.transitionContext.fromIndex + 1;
+                progress = self.transitionContext.backwardDistance / scrollView.bounds.size.width;
+            } else {
+                // 之前存在右移行为, 预测向右移动，右移的进度缩小到0，开始预测左移
+                self.transitionContext.forwardDistance += distance;
+                 self.transitionContext.predictIndex = self.transitionContext.fromIndex + 1;
+                progress = self.transitionContext.forwardDistance / scrollView.bounds.size.width;
+            }
+        } else { // 右移
+            if (self.transitionContext.forwardDistance > 0) {
+                // 之前存在左移行为, 预测向左移动，则预测索引不用更新，只是左移的进度变小
+                self.transitionContext.forwardDistance -= distance;
+                // self.transitionContext.predictIndex = self.transitionContext.fromIndex - 1;
+                progress = self.transitionContext.forwardDistance / scrollView.bounds.size.width;
+            } else {
+                // 之前存在左移行为, 预测向左移动，左移的进度缩小到0，开始预测右移
+                self.transitionContext.backwardDistance += distance;
+                self.transitionContext.predictIndex = self.transitionContext.fromIndex - 1;
+                progress = self.transitionContext.backwardDistance / scrollView.bounds.size.width;
+            }
         }
     } whenVertical:^{
-        if (predictPoint.y > 0) {
-            self.transitionContext.predictIndex = self.transitionContext.fromIndex + 1;
-            progress = scrollView.contentOffset.y / (self.transitionContext.predictIndex * scrollView.bounds.size.height);
-        } else {
-            self.transitionContext.predictIndex = self.transitionContext.fromIndex - 1;
-            progress = scrollView.contentOffset.y / (self.transitionContext.predictIndex * scrollView.bounds.size.height) - 1.0;
+        if (predictPoint.y > 0) { // 上移
+            if (self.transitionContext.backwardDistance > 0) {
+                // 之前存在下移行为, 预测向下移动，则预测索引不用更新，只是下移的进度变小
+                self.transitionContext.backwardDistance -= distance;
+                // self.transitionContext.predictIndex = self.transitionContext.fromIndex + 1;
+                progress = self.transitionContext.backwardDistance / scrollView.bounds.size.height;
+            } else {
+                // 之前存在下移行为, 预测向下移动，下移的进度缩小到0，开始预测上移
+                self.transitionContext.forwardDistance += distance;
+                self.transitionContext.predictIndex = self.transitionContext.fromIndex + 1;
+                progress = self.transitionContext.forwardDistance / scrollView.bounds.size.height;
+            }
+        } else { // 下移
+            if (self.transitionContext.forwardDistance > 0) {
+                // 之前存在上移行为, 预测向上移动，则预测索引不用更新，只是上移的进度变小
+                self.transitionContext.forwardDistance -= distance;
+                // self.transitionContext.predictIndex = self.transitionContext.fromIndex - 1;
+                progress = self.transitionContext.forwardDistance / scrollView.bounds.size.height;
+            } else {
+                // 之前存在上移行为, 预测向上移动，上移的进度缩小到0，开始预测下移
+                self.transitionContext.backwardDistance += distance;
+                self.transitionContext.predictIndex = self.transitionContext.fromIndex - 1;
+                progress = self.transitionContext.backwardDistance / scrollView.bounds.size.height;
+            }
         }
     }];
     [self notifyDelegateMayChangeIndexTo:self.transitionContext.predictIndex progress:progress];
@@ -340,9 +413,16 @@ UIScrollViewDelegate
     if (_transitionContext.fromIndex != self.transitionContext.toIndex) {
         [self notifyDelegateDidChangeIndexTo:self.transitionContext.toIndex];
     }
-    self.transitionContext = nil;
+    [self endTransition];
 }
 
+// called when setContentOffset/scrollRectVisible:animated: finishes. not called if not animating
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    if (_setIndexComplete) {
+        _setIndexComplete();
+        _setIndexComplete = nil;
+    }
+}
 
 #pragma mark - appearance
 

@@ -95,8 +95,9 @@ typedef NS_ENUM(int, GYPageViewControllerScrollDirection) {
 
  @param index index
  @param animation animation or not
+ @param complete complete
  */
-- (void)setIndex:(NSInteger)index animation:(BOOL)animation;
+- (void)setIndex:(NSInteger)index animation:(BOOL)animation complete:(void (^_Nullable)(void))complete;
 
 @end
 

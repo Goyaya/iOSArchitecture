@@ -66,6 +66,9 @@
     GYPageViewController *controller = [[GYPageViewController alloc] initWithControllers:self.controllers index:self.controllers.count - 1];
     controller.delegate = self;
     [self.navigationController pushViewController:controller animated:YES];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [controller setIndex:1 animation:YES];
+    });
 }
 
 - (void)showTransitionDemo {
