@@ -67,7 +67,9 @@
     controller.delegate = self;
     [self.navigationController pushViewController:controller animated:YES];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [controller setIndex:1 animation:YES];
+        [controller setIndex:1 animation:YES complete:^{
+            NSLog(@"%s", __func__);
+        }];
     });
 }
 
