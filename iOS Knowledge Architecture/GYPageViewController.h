@@ -42,10 +42,29 @@ typedef NS_ENUM(int, GYPageViewControllerScrollDirection) {
 
 @optional;
 
+/**
+ 切换控制器进度。在`willChangeIndexTo:`方法调用之前，该进度不可信，只是报告进度。
+
+ @param controller controller
+ @param index 目标索引。一定检查索引，避免小于0或大于总数的情况
+ @param progress 总体进度
+ */
 - (void)pageViewController:(GYPageViewController *)controller mayChangeIndexTo:(NSInteger)index progress:(float)progress;
 
+/**
+ 即将切换
+
+ @param controller controller
+ @param index 目标索引
+ */
 - (void)pageViewController:(GYPageViewController *)controller willChangeIndexTo:(NSInteger)index;
 
+/**
+ 切换完成
+
+ @param controller controller
+ @param index 目标索引
+ */
 - (void)pageViewController:(GYPageViewController *)controller didChangeIndexTo:(NSInteger)index;
 
 @end
@@ -91,7 +110,7 @@ typedef NS_ENUM(int, GYPageViewControllerScrollDirection) {
 - (instancetype)initWithDataSource:(id<GYPageViewControllerDataSource>)dataSource;
 
 /**
- specify the display index
+ specify the display index. not trigger delegate event
 
  @param index index
  @param animation animation or not
