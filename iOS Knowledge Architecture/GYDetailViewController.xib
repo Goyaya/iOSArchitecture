@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GYDetailViewController">
             <connections>
+                <outlet property="label" destination="f0x-4a-NpR" id="4or-jC-F41"/>
                 <outlet property="view" destination="iN0-l3-epB" id="EXR-Zu-dge"/>
             </connections>
         </placeholder>
@@ -52,12 +53,29 @@
                         <constraint firstAttribute="height" constant="44" id="njN-x3-nxb"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pmY-R1-nFh">
+                    <rect key="frame" x="145" y="276" width="54" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Dismiss"/>
+                    <connections>
+                        <action selector="dismissIfNeeds:" destination="-1" eventType="touchUpInside" id="AFP-B2-Yof"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0x-4a-NpR">
+                    <rect key="frame" x="82" y="140" width="211" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="f0x-4a-NpR" secondAttribute="trailing" constant="82" id="9Hl-3T-sWg"/>
                 <constraint firstItem="U5h-Al-DXv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BK4-ox-fXp"/>
                 <constraint firstAttribute="trailing" secondItem="QOO-4w-RHw" secondAttribute="trailing" id="F2f-6d-h7x"/>
+                <constraint firstItem="f0x-4a-NpR" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="120" id="OMr-Tt-pUY"/>
                 <constraint firstAttribute="trailing" secondItem="G4W-lg-ydq" secondAttribute="trailing" id="RfF-Z7-fvM"/>
+                <constraint firstItem="f0x-4a-NpR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="82" id="Y01-XR-SMG"/>
                 <constraint firstAttribute="bottom" secondItem="U5h-Al-DXv" secondAttribute="bottom" id="cBE-ec-QZV"/>
                 <constraint firstItem="DUe-jw-szd" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="h8O-YV-oqo"/>
                 <constraint firstAttribute="bottom" secondItem="G4W-lg-ydq" secondAttribute="bottom" id="to4-OH-Ip1"/>

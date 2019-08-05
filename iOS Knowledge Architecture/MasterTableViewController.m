@@ -9,10 +9,16 @@
 #import "MasterTableViewController.h"
 #import "GYPageViewController.h"
 #import "GYDetailViewController.h"
+#import "GYNavigateTransitionAnimator.h"
+#import "GYPresentTransitionAnimator.h"
 
 #import <objc/message.h>
 
-@interface MasterTableViewController () <GYPageViewControllerDataSource, GYPageViewControllerDelegate>
+@interface MasterTableViewController ()
+<GYPageViewControllerDataSource, GYPageViewControllerDelegate
+, UINavigationControllerDelegate
+, UIViewControllerTransitioningDelegate
+>
 
 /// mapper
 @property (nonatomic, readwrite, strong) NSDictionary<NSNumber *, NSString *> *selectorMapper;
@@ -35,7 +41,8 @@
     self.selectorMapper = @{
                             @(0): NSStringFromSelector(@selector(showPageViewControllerWithDataSource)),
                             @(1): NSStringFromSelector(@selector(showPageViewControllerWithMetadata)),
-                            @(2): NSStringFromSelector(@selector(showTransitionDemo))
+                            @(2): NSStringFromSelector(@selector(showNavigateTransitionDemo)),
+                            @(3): NSStringFromSelector(@selector(showPresentTransitionDemo))
                             };
     self.controllers = @[
                          ({
@@ -73,8 +80,18 @@
     });
 }
 
-- (void)showTransitionDemo {
-    
+- (void)showNavigateTransitionDemo {
+    self.navigationController.delegate = self;
+    GYDetailViewController *controller = [[GYDetailViewController alloc] init];
+    controller.title = @"transition";
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)showPresentTransitionDemo {
+    GYDetailViewController *controller = [[GYDetailViewController alloc] init];
+    controller.modalPresentationStyle = UIModalPresentationCustom;
+    controller.transitioningDelegate = self;
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 #pragma mark -
@@ -107,6 +124,25 @@
 
 - (void)pageViewController:(GYPageViewController *)controller didChangeIndexTo:(NSInteger)index {
     NSLog(@"index did change to: %ld", index);
+}
+
+#pragma mark -
+
+- (nullable id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
+                                            animationControllerForOperation:(UINavigationControllerOperation)operation
+                                                         fromViewController:(UIViewController *)fromVC
+                                                           toViewController:(UIViewController *)toVC {
+    return [[GYNavigateTransitionAnimator alloc] init];
+}
+
+#pragma mark -
+
+- (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    return [[GYPresentTransitionAnimator alloc] init];
+}
+
+- (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    return [[GYPresentTransitionAnimator alloc] init];
 }
 
 #pragma mark -

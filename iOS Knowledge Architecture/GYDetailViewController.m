@@ -10,8 +10,9 @@
 #import "UIColor+GYComponent.h"
 
 @interface GYDetailViewController ()
-/// label
-@property (nonatomic, readwrite, strong) UILabel *label;
+
+@property (weak, nonatomic) IBOutlet UILabel *label;
+
 
 @end
 
@@ -61,14 +62,10 @@
 - (void)dealloc {
     NSLog(@"%@ - %s", self,  __func__);
 }
-
-- (UILabel *)label {
-    if (!_label) {
-        _label = [[UILabel alloc] init];
-        _label.text = self.title;
-        _label.frame = CGRectMake(100, 100, 200, 30);
+- (IBAction)dismissIfNeeds:(id)sender {
+    if (self.presentingViewController) {
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
-    return _label;
 }
 
 /*

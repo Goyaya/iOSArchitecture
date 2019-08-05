@@ -13,6 +13,8 @@
 		E3027EEA22F5557D009A7F27 /* GYDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3027EE922F5557D009A7F27 /* GYDetailViewController.m */; };
 		E3027EED22F56AC2009A7F27 /* UIColor+GYComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3027EEC22F56AC2009A7F27 /* UIColor+GYComponent.m */; };
 		E3027EEF22F59C38009A7F27 /* GYDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3027EEE22F59C38009A7F27 /* GYDetailViewController.xib */; };
+		E3027EF422F7076E009A7F27 /* GYNavigateTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = E3027EF322F7076E009A7F27 /* GYNavigateTransitionAnimator.m */; };
+		E3027EF722F72182009A7F27 /* GYPresentTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = E3027EF622F72182009A7F27 /* GYPresentTransitionAnimator.m */; };
 		E308636022EF49B900675E1F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E308635F22EF49B900675E1F /* Launch Screen.storyboard */; };
 		E308636322EF4A6D00675E1F /* MasterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E308636222EF4A6D00675E1F /* MasterTableViewController.m */; };
 		E308636622EF4BBC00675E1F /* GYPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E308636522EF4BBC00675E1F /* GYPageViewController.m */; };
@@ -56,6 +58,10 @@
 		E3027EEB22F56AC2009A7F27 /* UIColor+GYComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+GYComponent.h"; sourceTree = "<group>"; };
 		E3027EEC22F56AC2009A7F27 /* UIColor+GYComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+GYComponent.m"; sourceTree = "<group>"; };
 		E3027EEE22F59C38009A7F27 /* GYDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GYDetailViewController.xib; sourceTree = "<group>"; };
+		E3027EF222F7076E009A7F27 /* GYNavigateTransitionAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GYNavigateTransitionAnimator.h; sourceTree = "<group>"; };
+		E3027EF322F7076E009A7F27 /* GYNavigateTransitionAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GYNavigateTransitionAnimator.m; sourceTree = "<group>"; };
+		E3027EF522F72182009A7F27 /* GYPresentTransitionAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GYPresentTransitionAnimator.h; sourceTree = "<group>"; };
+		E3027EF622F72182009A7F27 /* GYPresentTransitionAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GYPresentTransitionAnimator.m; sourceTree = "<group>"; };
 		E308635F22EF49B900675E1F /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		E308636122EF4A6D00675E1F /* MasterTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterTableViewController.h; sourceTree = "<group>"; };
 		E308636222EF4A6D00675E1F /* MasterTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterTableViewController.m; sourceTree = "<group>"; };
@@ -119,6 +125,26 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E3027EF022F706E9009A7F27 /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				E308636422EF4BBC00675E1F /* GYPageViewController.h */,
+				E308636522EF4BBC00675E1F /* GYPageViewController.m */,
+			);
+			path = Container;
+			sourceTree = "<group>";
+		};
+		E3027EF122F7070A009A7F27 /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				E3027EF222F7076E009A7F27 /* GYNavigateTransitionAnimator.h */,
+				E3027EF322F7076E009A7F27 /* GYNavigateTransitionAnimator.m */,
+				E3027EF522F72182009A7F27 /* GYPresentTransitionAnimator.h */,
+				E3027EF622F72182009A7F27 /* GYPresentTransitionAnimator.m */,
+			);
+			path = Transition;
+			sourceTree = "<group>";
+		};
 		E308BD0322EDF72400C47F72 = {
 			isa = PBXGroup;
 			children = (
@@ -144,14 +170,14 @@
 		E308BD0E22EDF72400C47F72 /* iOS Knowledge Architecture */ = {
 			isa = PBXGroup;
 			children = (
+				E3027EF022F706E9009A7F27 /* Container */,
+				E3027EF122F7070A009A7F27 /* Transition */,
 				E308BD0F22EDF72400C47F72 /* AppDelegate.h */,
 				E308BD1022EDF72400C47F72 /* AppDelegate.m */,
 				E3027EEB22F56AC2009A7F27 /* UIColor+GYComponent.h */,
 				E3027EEC22F56AC2009A7F27 /* UIColor+GYComponent.m */,
 				E308636122EF4A6D00675E1F /* MasterTableViewController.h */,
 				E308636222EF4A6D00675E1F /* MasterTableViewController.m */,
-				E308636422EF4BBC00675E1F /* GYPageViewController.h */,
-				E308636522EF4BBC00675E1F /* GYPageViewController.m */,
 				E3027EE822F5557D009A7F27 /* GYDetailViewController.h */,
 				E3027EE922F5557D009A7F27 /* GYDetailViewController.m */,
 				E3027EEE22F59C38009A7F27 /* GYDetailViewController.xib */,
@@ -447,7 +473,9 @@
 				E3027EEA22F5557D009A7F27 /* GYDetailViewController.m in Sources */,
 				E308636322EF4A6D00675E1F /* MasterTableViewController.m in Sources */,
 				E3027EED22F56AC2009A7F27 /* UIColor+GYComponent.m in Sources */,
+				E3027EF422F7076E009A7F27 /* GYNavigateTransitionAnimator.m in Sources */,
 				E308BD2222EDF72600C47F72 /* main.m in Sources */,
+				E3027EF722F72182009A7F27 /* GYPresentTransitionAnimator.m in Sources */,
 				E308636622EF4BBC00675E1F /* GYPageViewController.m in Sources */,
 				E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */,
 			);
