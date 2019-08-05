@@ -11,6 +11,7 @@
 #import "GYDetailViewController.h"
 #import "GYNavigateTransitionAnimator.h"
 #import "GYPresentTransitionAnimator.h"
+#import "GYPresentationController.h"
 
 #import <objc/message.h>
 
@@ -143,6 +144,10 @@
 
 - (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
     return [[GYPresentTransitionAnimator alloc] init];
+}
+
+- (nullable UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented presentingViewController:(nullable UIViewController *)presenting sourceViewController:(UIViewController *)source {
+    return [[GYPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
 }
 
 #pragma mark -
