@@ -43,6 +43,14 @@
     
 }
 
+- (void)containerViewWillLayoutSubviews {
+    self.dimmingView.frame = self.containerView.bounds;
+    self.presentedView.center = CGPointMake(self.containerView.frame.size.width / 2, self.containerView.frame.size.height / 2);
+    self.presentedView.bounds = CGRectMake(0, 0, self.containerView.frame.size.width / 3 * 2, self.containerView.frame.size.height / 3 * 2);
+}
+
+//- (BOOL)shouldRemovePresentersView { return YES; }
+
 - (UIView *)dimmingView {
     if (!_dimmingView) {
         _dimmingView = [[UIView alloc] init];
