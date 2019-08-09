@@ -26,6 +26,8 @@
 		E308BD2222EDF72600C47F72 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD2122EDF72600C47F72 /* main.m */; };
 		E308BD2C22EDF72600C47F72 /* iOS_Knowledge_ArchitectureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD2B22EDF72600C47F72 /* iOS_Knowledge_ArchitectureTests.m */; };
 		E308BD3722EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD3622EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m */; };
+		E32E1A3E22F911320044468D /* GYTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E32E1A3D22F911320044468D /* GYTabBarViewController.m */; };
+		E32E1A4122F9119D0044468D /* GYSlideTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = E32E1A4022F9119D0044468D /* GYSlideTransitionAnimator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +86,10 @@
 		E308BD3222EDF72600C47F72 /* iOS Knowledge ArchitectureUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS Knowledge ArchitectureUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E308BD3622EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_Knowledge_ArchitectureUITests.m; sourceTree = "<group>"; };
 		E308BD3822EDF72600C47F72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E32E1A3C22F911320044468D /* GYTabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GYTabBarViewController.h; sourceTree = "<group>"; };
+		E32E1A3D22F911320044468D /* GYTabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GYTabBarViewController.m; sourceTree = "<group>"; };
+		E32E1A3F22F9119D0044468D /* GYSlideTransitionAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GYSlideTransitionAnimator.h; sourceTree = "<group>"; };
+		E32E1A4022F9119D0044468D /* GYSlideTransitionAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GYSlideTransitionAnimator.m; sourceTree = "<group>"; };
 		FB4BF7A21DE4BBB83185FF58 /* Pods-iOS Knowledge Architecture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS Knowledge Architecture.release.xcconfig"; path = "Target Support Files/Pods-iOS Knowledge Architecture/Pods-iOS Knowledge Architecture.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,6 +150,8 @@
 				E3027EF322F7076E009A7F27 /* GYNavigateTransitionAnimator.m */,
 				E3027EF522F72182009A7F27 /* GYPresentTransitionAnimator.h */,
 				E3027EF622F72182009A7F27 /* GYPresentTransitionAnimator.m */,
+				E32E1A3F22F9119D0044468D /* GYSlideTransitionAnimator.h */,
+				E32E1A4022F9119D0044468D /* GYSlideTransitionAnimator.m */,
 				E3027EFD22F7F6E1009A7F27 /* GYPresentationController.h */,
 				E3027EFE22F7F6E1009A7F27 /* GYPresentationController.m */,
 			);
@@ -181,6 +189,8 @@
 				E308BD1022EDF72400C47F72 /* AppDelegate.m */,
 				E3027EEB22F56AC2009A7F27 /* UIColor+GYComponent.h */,
 				E3027EEC22F56AC2009A7F27 /* UIColor+GYComponent.m */,
+				E32E1A3C22F911320044468D /* GYTabBarViewController.h */,
+				E32E1A3D22F911320044468D /* GYTabBarViewController.m */,
 				E308636122EF4A6D00675E1F /* MasterTableViewController.h */,
 				E308636222EF4A6D00675E1F /* MasterTableViewController.m */,
 				E3027EE822F5557D009A7F27 /* GYDetailViewController.h */,
@@ -480,8 +490,10 @@
 				E3027EED22F56AC2009A7F27 /* UIColor+GYComponent.m in Sources */,
 				E3027EF422F7076E009A7F27 /* GYNavigateTransitionAnimator.m in Sources */,
 				E308BD2222EDF72600C47F72 /* main.m in Sources */,
+				E32E1A3E22F911320044468D /* GYTabBarViewController.m in Sources */,
 				E3027EF722F72182009A7F27 /* GYPresentTransitionAnimator.m in Sources */,
 				E308636622EF4BBC00675E1F /* GYPageViewController.m in Sources */,
+				E32E1A4122F9119D0044468D /* GYSlideTransitionAnimator.m in Sources */,
 				E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */,
 				E3027EFF22F7F6E1009A7F27 /* GYPresentationController.m in Sources */,
 			);
