@@ -43,10 +43,15 @@
     
 }
 
+- (CGRect)frameOfPresentedViewInContainerView {
+    CGSize size = CGSizeMake(self.containerView.frame.size.width, self.containerView.frame.size.height * 0.75);
+//    return self.containerView
+    return CGRectMake((self.containerView.frame.size.width - size.width) / 2, self.containerView.frame.size.height - size.height, size.width, size.height);
+}
+
 - (void)containerViewWillLayoutSubviews {
     self.dimmingView.frame = self.containerView.bounds;
-    self.presentedView.center = CGPointMake(self.containerView.frame.size.width / 2, self.containerView.frame.size.height / 2);
-    self.presentedView.bounds = CGRectMake(0, 0, self.containerView.frame.size.width / 3 * 2, self.containerView.frame.size.height / 3 * 2);
+    self.presentedView.frame = [self frameOfPresentedViewInContainerView];
 }
 
 //- (BOOL)shouldRemovePresentersView { return YES; }
