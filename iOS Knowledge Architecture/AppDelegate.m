@@ -14,6 +14,10 @@
 
 @implementation AppDelegate
 
+- (void)someControlTouchUpinside:(UIColor *)control {
+    NSLog(@"%s, %@", __func__, control);
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,7 +14,7 @@
         <scene sceneID="UG6-Ri-hlu">
             <objects>
                 <tableViewController id="svC-je-shB" customClass="MasterTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="4GC-MK-bGP">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="4GC-MK-bGP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -27,7 +28,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Example" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aVX-gv-ipN">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Controls" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aVX-gv-ipN">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -36,6 +37,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="T7F-4V-lHa" kind="show" id="fcf-Wg-IO1"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -50,6 +54,60 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TvC-Oa-2Hn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1079.7101449275362" y="87.723214285714278"/>
+        </scene>
+        <!--Controls-->
+        <scene sceneID="Mzh-uG-hPV">
+            <objects>
+                <viewController title="Controls" id="T7F-4V-lHa" customClass="ControlsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5dm-ZD-c9N">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D01-xp-WBK">
+                                <rect key="frame" x="20" y="108" width="78" height="30"/>
+                                <state key="normal" title="Button One"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kZu-cZ-7OI">
+                                <rect key="frame" x="20" y="148" width="73" height="30"/>
+                                <state key="normal" title="Buton Two"/>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="3eU-6r-GyF">
+                                <rect key="frame" x="20" y="188" width="121" height="29"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                            </segmentedControl>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2yv-HL-xg7">
+                                <rect key="frame" x="18" y="226" width="118" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="114" id="P2I-Oo-81I"/>
+                                </constraints>
+                            </slider>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="D01-xp-WBK" firstAttribute="top" secondItem="hr7-jF-eLW" secondAttribute="top" constant="20" id="8mT-wZ-ziE"/>
+                            <constraint firstItem="3eU-6r-GyF" firstAttribute="top" secondItem="kZu-cZ-7OI" secondAttribute="bottom" constant="10" id="DqB-3n-xRa"/>
+                            <constraint firstItem="kZu-cZ-7OI" firstAttribute="top" secondItem="D01-xp-WBK" secondAttribute="bottom" constant="10" id="KKN-hi-Rln"/>
+                            <constraint firstItem="2yv-HL-xg7" firstAttribute="top" secondItem="3eU-6r-GyF" secondAttribute="bottom" constant="10" id="VOX-CQ-laL"/>
+                            <constraint firstItem="3eU-6r-GyF" firstAttribute="leading" secondItem="hr7-jF-eLW" secondAttribute="leading" constant="20" id="fXu-F8-YXf"/>
+                            <constraint firstItem="kZu-cZ-7OI" firstAttribute="leading" secondItem="hr7-jF-eLW" secondAttribute="leading" constant="20" id="fbf-Zu-4wz"/>
+                            <constraint firstItem="2yv-HL-xg7" firstAttribute="leading" secondItem="hr7-jF-eLW" secondAttribute="leading" constant="20" id="gF2-wB-rTw"/>
+                            <constraint firstItem="D01-xp-WBK" firstAttribute="leading" secondItem="hr7-jF-eLW" secondAttribute="leading" constant="20" id="hNN-0X-aay"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="hr7-jF-eLW"/>
+                    </view>
+                    <connections>
+                        <outletCollection property="controls" destination="D01-xp-WBK" id="oXN-n8-p3f"/>
+                        <outletCollection property="controls" destination="kZu-cZ-7OI" id="3fl-60-mIS"/>
+                        <outletCollection property="controls" destination="3eU-6r-GyF" id="fTI-iA-bds"/>
+                        <outletCollection property="controls" destination="2yv-HL-xg7" id="19c-1R-1EX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Ff-iB-yPx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1913" y="88"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="RvE-Wp-2kw">
