@@ -206,10 +206,15 @@
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateFailed: {
+            // 结束时的速度和动画曲线
+            CGFloat velocity = fabs([panGesture velocityInView:self.view].y);
+            self.percentDrivenTransition.completionCurve = UIViewAnimationCurveEaseOut;
             CGFloat percent = self.distance / self.totalDistance;
             if (percent > 0.5) {
+                self.percentDrivenTransition.completionSpeed = velocity / ((1 - percent) * self.totalDistance);
                 [self.percentDrivenTransition finishInteractiveTransition];
             } else {
+                self.percentDrivenTransition.completionSpeed = velocity /  (percent * self.totalDistance);
                 [self.percentDrivenTransition cancelInteractiveTransition];
             }
             _percentDrivenTransition = nil;
