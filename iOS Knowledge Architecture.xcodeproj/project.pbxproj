@@ -19,6 +19,7 @@
 		E308BD2222EDF72600C47F72 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD2122EDF72600C47F72 /* main.m */; };
 		E308BD2C22EDF72600C47F72 /* iOS_Knowledge_ArchitectureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD2B22EDF72600C47F72 /* iOS_Knowledge_ArchitectureTests.m */; };
 		E308BD3722EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD3622EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m */; };
+		E30F515723004DE200EBF152 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E30F515623004DE200EBF152 /* CollectionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,8 @@
 		E308BD3222EDF72600C47F72 /* iOS Knowledge ArchitectureUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS Knowledge ArchitectureUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E308BD3622EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_Knowledge_ArchitectureUITests.m; sourceTree = "<group>"; };
 		E308BD3822EDF72600C47F72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E30F515523004DE200EBF152 /* CollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		E30F515623004DE200EBF152 /* CollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 		FB4BF7A21DE4BBB83185FF58 /* Pods-iOS Knowledge Architecture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS Knowledge Architecture.release.xcconfig"; path = "Target Support Files/Pods-iOS Knowledge Architecture/Pods-iOS Knowledge Architecture.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +140,8 @@
 				E308BD1022EDF72400C47F72 /* AppDelegate.m */,
 				E308636122EF4A6D00675E1F /* MasterTableViewController.h */,
 				E308636222EF4A6D00675E1F /* MasterTableViewController.m */,
+				E30F515523004DE200EBF152 /* CollectionViewController.h */,
+				E30F515623004DE200EBF152 /* CollectionViewController.m */,
 				E308BD1522EDF72400C47F72 /* Main.storyboard */,
 				E308BD1B22EDF72600C47F72 /* Assets.xcassets */,
 				E308BD2022EDF72600C47F72 /* Info.plist */,
@@ -426,6 +431,7 @@
 				E308BD1A22EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld in Sources */,
 				E308636322EF4A6D00675E1F /* MasterTableViewController.m in Sources */,
 				E308BD2222EDF72600C47F72 /* main.m in Sources */,
+				E30F515723004DE200EBF152 /* CollectionViewController.m in Sources */,
 				E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
