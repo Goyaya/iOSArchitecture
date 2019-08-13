@@ -21,6 +21,10 @@
 		E308BD3722EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD3622EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m */; };
 		E30F515B2300535000EBF152 /* UIColor+GYComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E30F51592300535000EBF152 /* UIColor+GYComponent.m */; };
 		E30F515E230053CA00EBF152 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E30F515C230053CA00EBF152 /* CollectionViewController.m */; };
+		E30F51612300542800EBF152 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E30F51602300542800EBF152 /* CollectionViewCell.m */; };
+		E3537DF923024FAF00880A66 /* CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3537DF823024FAF00880A66 /* CellModel.m */; };
+		E3537DFC230252BA00880A66 /* SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3537DFB230252BA00880A66 /* SectionModel.m */; };
+		E3537DFF2302555800880A66 /* CollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3537DFE2302555800880A66 /* CollectionReusableView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +74,14 @@
 		E30F515A2300535000EBF152 /* UIColor+GYComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+GYComponent.h"; sourceTree = "<group>"; };
 		E30F515C230053CA00EBF152 /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 		E30F515D230053CA00EBF152 /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		E30F515F2300542800EBF152 /* CollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
+		E30F51602300542800EBF152 /* CollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
+		E3537DF723024FAF00880A66 /* CellModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CellModel.h; sourceTree = "<group>"; };
+		E3537DF823024FAF00880A66 /* CellModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CellModel.m; sourceTree = "<group>"; };
+		E3537DFA230252BA00880A66 /* SectionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SectionModel.h; sourceTree = "<group>"; };
+		E3537DFB230252BA00880A66 /* SectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SectionModel.m; sourceTree = "<group>"; };
+		E3537DFD2302555800880A66 /* CollectionReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionReusableView.h; sourceTree = "<group>"; };
+		E3537DFE2302555800880A66 /* CollectionReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionReusableView.m; sourceTree = "<group>"; };
 		FB4BF7A21DE4BBB83185FF58 /* Pods-iOS Knowledge Architecture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS Knowledge Architecture.release.xcconfig"; path = "Target Support Files/Pods-iOS Knowledge Architecture/Pods-iOS Knowledge Architecture.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,6 +154,14 @@
 				E30F51582300532C00EBF152 /* Tools */,
 				E30F515D230053CA00EBF152 /* CollectionViewController.h */,
 				E30F515C230053CA00EBF152 /* CollectionViewController.m */,
+				E30F515F2300542800EBF152 /* CollectionViewCell.h */,
+				E30F51602300542800EBF152 /* CollectionViewCell.m */,
+				E3537DFD2302555800880A66 /* CollectionReusableView.h */,
+				E3537DFE2302555800880A66 /* CollectionReusableView.m */,
+				E3537DFA230252BA00880A66 /* SectionModel.h */,
+				E3537DFB230252BA00880A66 /* SectionModel.m */,
+				E3537DF723024FAF00880A66 /* CellModel.h */,
+				E3537DF823024FAF00880A66 /* CellModel.m */,
 				E308BD0F22EDF72400C47F72 /* AppDelegate.h */,
 				E308BD1022EDF72400C47F72 /* AppDelegate.m */,
 				E308636122EF4A6D00675E1F /* MasterTableViewController.h */,
@@ -442,11 +462,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				E308BD1A22EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld in Sources */,
+				E3537DFF2302555800880A66 /* CollectionReusableView.m in Sources */,
 				E308636322EF4A6D00675E1F /* MasterTableViewController.m in Sources */,
 				E30F515E230053CA00EBF152 /* CollectionViewController.m in Sources */,
 				E308BD2222EDF72600C47F72 /* main.m in Sources */,
+				E3537DF923024FAF00880A66 /* CellModel.m in Sources */,
 				E30F515B2300535000EBF152 /* UIColor+GYComponent.m in Sources */,
+				E30F51612300542800EBF152 /* CollectionViewCell.m in Sources */,
 				E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */,
+				E3537DFC230252BA00880A66 /* SectionModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
