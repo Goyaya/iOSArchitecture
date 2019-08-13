@@ -152,16 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				E30F51582300532C00EBF152 /* Tools */,
-				E30F515D230053CA00EBF152 /* CollectionViewController.h */,
-				E30F515C230053CA00EBF152 /* CollectionViewController.m */,
-				E30F515F2300542800EBF152 /* CollectionViewCell.h */,
-				E30F51602300542800EBF152 /* CollectionViewCell.m */,
-				E3537DFD2302555800880A66 /* CollectionReusableView.h */,
-				E3537DFE2302555800880A66 /* CollectionReusableView.m */,
-				E3537DFA230252BA00880A66 /* SectionModel.h */,
-				E3537DFB230252BA00880A66 /* SectionModel.m */,
-				E3537DF723024FAF00880A66 /* CellModel.h */,
-				E3537DF823024FAF00880A66 /* CellModel.m */,
+				E3537E0B2302A3A200880A66 /* CollectionView */,
 				E308BD0F22EDF72400C47F72 /* AppDelegate.h */,
 				E308BD1022EDF72400C47F72 /* AppDelegate.m */,
 				E308636122EF4A6D00675E1F /* MasterTableViewController.h */,
@@ -201,6 +192,23 @@
 				E30F51592300535000EBF152 /* UIColor+GYComponent.m */,
 			);
 			path = Tools;
+			sourceTree = "<group>";
+		};
+		E3537E0B2302A3A200880A66 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				E30F515D230053CA00EBF152 /* CollectionViewController.h */,
+				E30F515C230053CA00EBF152 /* CollectionViewController.m */,
+				E30F515F2300542800EBF152 /* CollectionViewCell.h */,
+				E30F51602300542800EBF152 /* CollectionViewCell.m */,
+				E3537DFD2302555800880A66 /* CollectionReusableView.h */,
+				E3537DFE2302555800880A66 /* CollectionReusableView.m */,
+				E3537DFA230252BA00880A66 /* SectionModel.h */,
+				E3537DFB230252BA00880A66 /* SectionModel.m */,
+				E3537DF723024FAF00880A66 /* CellModel.h */,
+				E3537DF823024FAF00880A66 /* CellModel.m */,
+			);
+			path = CollectionView;
 			sourceTree = "<group>";
 		};
 		E61FFBB79302708C62392BDA /* Frameworks */ = {
