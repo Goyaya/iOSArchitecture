@@ -7,7 +7,7 @@
 //
 
 #import "CollectionViewController.h"
-
+#import <LXReorderableCollectionViewFlowLayout.h>
 #import "CollectionViewCell.h"
 #import "CollectionReusableView.h"
 
@@ -38,7 +38,7 @@ UICollectionViewDataSource
     self.collectionView.frame = self.view.bounds;
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    [self installMoveGesture];
+//    [self installMoveGesture];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         int sections = 5;
@@ -57,6 +57,12 @@ UICollectionViewDataSource
             }
             [self.dataSource addObject:sectionModel];
         }
+        
+        SectionModel *sectionModel = [[SectionModel alloc] init];
+        sectionModel.headerTitle = @"Empty section header";
+        sectionModel.footerTitle = @"Empty section footer";
+        [self.dataSource addObject:sectionModel];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.collectionView reloadData];
         });
@@ -65,7 +71,7 @@ UICollectionViewDataSource
 
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
-        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+        LXReorderableCollectionViewFlowLayout *layout = [[LXReorderableCollectionViewFlowLayout alloc] init];
         layout.sectionInset = UIEdgeInsetsMake(10, 20, 10, 20);
         layout.minimumLineSpacing = 10;
         layout.minimumInteritemSpacing = 10;
@@ -132,6 +138,12 @@ UICollectionViewDataSource
     }
 }
 
+- (void)collectionView:(UICollectionView *)collectionView itemAtIndexPath:(NSIndexPath *)fromIndexPath willMoveToIndexPath:(NSIndexPath *)toIndexPath {
+    CellModel * sourceModel = [self.dataSource[fromIndexPath.section].cells objectAtIndex:fromIndexPath.row];
+    [self.dataSource[fromIndexPath.section].cells removeObject:sourceModel];
+    [self.dataSource[toIndexPath.section].cells insertObject:sourceModel atIndex:toIndexPath.row];
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -172,20 +184,20 @@ UICollectionViewDataSource
 
 - (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath*)destinationIndexPath {
     NSLog(@"\n%s - (%ld, %ld)\n", __func__, destinationIndexPath.section, destinationIndexPath.row);
-    if (sourceIndexPath.section == destinationIndexPath.section && sourceIndexPath.row == destinationIndexPath.row) {
-        return;
-    }
-    
-    if (sourceIndexPath.section == destinationIndexPath.section) {
-        [self.dataSource[sourceIndexPath.section].cells exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
-    } else {
-        CellModel *sourceModel = self.dataSource[sourceIndexPath.section].cells[sourceIndexPath.row];
-        
-        // 从之前组删除
-        [self.dataSource[sourceIndexPath.section].cells removeObject:sourceModel];
-        // 插入新的组
-        [self.dataSource[destinationIndexPath.section].cells insertObject:sourceModel atIndex:destinationIndexPath.row];
-    }
+//    if (sourceIndexPath.section == destinationIndexPath.section && sourceIndexPath.row == destinationIndexPath.row) {
+//        return;
+//    }
+//
+//    if (sourceIndexPath.section == destinationIndexPath.section) {
+//        [self.dataSource[sourceIndexPath.section].cells exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
+//    } else {
+//        CellModel *sourceModel = self.dataSource[sourceIndexPath.section].cells[sourceIndexPath.row];
+//
+//        // 从之前组删除
+//        [self.dataSource[sourceIndexPath.section].cells removeObject:sourceModel];
+//        // 插入新的组
+//        [self.dataSource[destinationIndexPath.section].cells insertObject:sourceModel atIndex:destinationIndexPath.row];
+//    }
 }
 
 /// Returns a list of index titles to display in the index view (e.g. ["A", "B", "C" ... "Z", "#"])

@@ -8,6 +8,8 @@ target 'iOS Knowledge Architecture' do
   # Pods for iOS Knowledge Architecture
   pod 'DoraemonKit/Core', '~> 1.1.6', :configurations => ['Debug']
   pod 'LookinServer', :configurations => ['Debug']
+  
+  pod 'LXReorderableCollectionViewFlowLayout'
 
   target 'iOS Knowledge ArchitectureTests' do
     inherit! :search_paths
