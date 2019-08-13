@@ -262,9 +262,19 @@ UICollectionViewDataSource
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
     
+    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    [UIView animateWithDuration:0.25 animations:^{
+        cell.transform = CGAffineTransformMakeScale(1.3, 1.3);
+    }];
+    
 }
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    
+    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    [UIView animateWithDuration:0.25 animations:^{
+        cell.transform = CGAffineTransformIdentity;
+    }];
     
 }
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
