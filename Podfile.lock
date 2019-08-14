@@ -8,6 +8,7 @@ PODS:
   - fishhook (0.2)
   - LookinServer (0.9.3)
   - LXReorderableCollectionViewFlowLayout (0.2.1)
+  - Masonry (1.1.0)
   - PNChart (0.8.9):
     - UICountingLabel (~> 1.2.0)
   - UICountingLabel (1.2.0)
@@ -17,6 +18,7 @@ DEPENDENCIES:
   - DoraemonKit/Core (~> 1.1.6)
   - LookinServer
   - LXReorderableCollectionViewFlowLayout
+  - Masonry
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -25,6 +27,7 @@ SPEC REPOS:
     - fishhook
     - LookinServer
     - LXReorderableCollectionViewFlowLayout
+    - Masonry
     - PNChart
     - UICountingLabel
     - "UITextView+Placeholder"
@@ -35,10 +38,11 @@ SPEC CHECKSUMS:
   fishhook: ea19933abfe8f2f52c55fd8b6e2718467d3ebc89
   LookinServer: 44f1b5f32743dc61068a156ff86b5b47d0a82943
   LXReorderableCollectionViewFlowLayout: acd6fe9fd0800efc656266a345130a2f634abf85
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   PNChart: 84774d225c2126ded6c93d4dbe6ae98c3a73c2d2
   UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
   "UITextView+Placeholder": 0c3efd97f37ea64bde7f34cc6e90fe02e87b3909
 
-PODFILE CHECKSUM: 59a88794b7aaa7bcef90cfc7cd30a7ebb2e761ab
+PODFILE CHECKSUM: 869fb85dec3901b629ed195e073b6711aa9e2d73
 
 COCOAPODS: 1.6.1

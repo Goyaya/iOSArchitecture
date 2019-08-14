@@ -10,7 +10,8 @@ target 'iOS Knowledge Architecture' do
   pod 'LookinServer', :configurations => ['Debug']
   
   pod 'LXReorderableCollectionViewFlowLayout'
-
+  pod 'Masonry'
+  
   target 'iOS Knowledge ArchitectureTests' do
     inherit! :search_paths
     # Pods for testing
