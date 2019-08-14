@@ -12,10 +12,8 @@
 
 @property (nonatomic, readwrite, strong) NSMutableArray<NSMutableArray<UICollectionViewLayoutAttributes *> *> *cachedCellAttributes;
 @property (nonatomic, readwrite, strong) NSMutableDictionary<NSString *, UICollectionViewLayoutAttributes *> *cachedSupplementaryAttributes;
-/// 总大小
-@property (nonatomic, readwrite, assign) CGSize totalSize;
-/// 最新导致刷新layout的bounds
-@property (nonatomic, readwrite, assign) CGRect latestInvalidateLayoutBounds;
+/// 内容总大小
+@property (nonatomic, readwrite, assign) CGSize contentSize;
 
 @end
 
@@ -47,7 +45,7 @@
     [super prepareLayout];
     [self.cachedCellAttributes removeAllObjects];
     [self.cachedSupplementaryAttributes removeAllObjects];
-    self.totalSize = CGSizeZero;
+    self.contentSize = CGSizeZero;
     if (@available(iOS 11.0, *)) {
         self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
@@ -121,7 +119,7 @@
                     sectionLastY = CGRectGetMaxY([frameRecorder.lastObject CGRectValue]) + insets.bottom;
                 }
                 
-                self.totalSize = CGSizeMake(maxWidth, sectionLastY);
+                self.contentSize = CGSizeMake(maxWidth, sectionLastY);
                 break;
             }
             case UICollectionViewScrollDirectionHorizontal: {
@@ -176,7 +174,7 @@
                     sectionLastX = CGRectGetMaxX([frameRecorder.lastObject CGRectValue]) + insets.right;
                 }
                 
-                self.totalSize = CGSizeMake(sectionLastX, maxHeight);
+                self.contentSize = CGSizeMake(sectionLastX, maxHeight);
                 break;
             }
         }
@@ -212,7 +210,7 @@
 }
 
 - (CGSize)collectionViewContentSize {
-    return self.totalSize;
+    return self.contentSize;
 }
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
