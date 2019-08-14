@@ -22,6 +22,7 @@
 UICollectionViewDataSource
 , UICollectionViewDelegate
 , UICollectionViewDelegateFlowLayout
+, UICollectionViewDragDelegate
 >
 
 @property (nonatomic, readwrite, strong) UICollectionView *collectionView;
@@ -136,6 +137,10 @@ UICollectionViewDataSource
         
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
+        if (@available(iOS 11.0, *)) {
+            _collectionView.dragDelegate = self;
+            _collectionView.dragInteractionEnabled = YES;
+        }
     }
     return _collectionView;
 }
@@ -242,7 +247,7 @@ UICollectionViewDataSource
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
-    return indexPath.row % 2 == 0;
+    return NO;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath*)destinationIndexPath {
@@ -327,19 +332,19 @@ UICollectionViewDataSource
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
     
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    [UIView animateWithDuration:0.25 animations:^{
-        cell.transform = CGAffineTransformMakeScale(1.3, 1.3);
-    }];
+//    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+//    [UIView animateWithDuration:0.25 animations:^{
+//        cell.transform = CGAffineTransformMakeScale(1.3, 1.3);
+//    }];
     
 }
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
     
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    [UIView animateWithDuration:0.25 animations:^{
-        cell.transform = CGAffineTransformIdentity;
-    }];
+//    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+//    [UIView animateWithDuration:0.25 animations:^{
+//        cell.transform = CGAffineTransformIdentity;
+//    }];
     
 }
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -383,7 +388,7 @@ UICollectionViewDataSource
 // All three should be implemented if any are.
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
-    return indexPath.row % 2 != 0;
+    return NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender {
@@ -449,5 +454,89 @@ UICollectionViewDataSource
     NSLog(@"\n%s", __func__);
     return YES;
 }
+
+#pragma mark - drag
+
+- (UIDragItem *)dragItemAatIndexPath:(NSIndexPath *)indexPath  API_AVAILABLE(ios(11.0)) {
+    if (indexPath.section < self.dataSource.count && indexPath.row < self.dataSource[indexPath.section].cells.count) {
+        CellModel *model = self.dataSource[indexPath.section].cells[indexPath.row];
+        NSItemProvider *provider = [[NSItemProvider alloc] initWithItem:model typeIdentifier:@"MODEL"];
+        UIDragItem *dragItem = [[UIDragItem alloc] initWithItemProvider:provider];
+        dragItem.localObject = [UIApplication sharedApplication];
+        return dragItem;
+    }
+    return nil;
+}
+
+/* Provide items to begin a drag associated with a given indexPath.
+ * If an empty array is returned a drag session will not begin.
+ */
+- (NSArray<UIDragItem *> *)collectionView:(UICollectionView *)collectionView itemsForBeginningDragSession:(id<UIDragSession>)session atIndexPath:(NSIndexPath *)indexPath  API_AVAILABLE(ios(11.0)) {
+    NSLog(@"\n%s", __func__);
+    UIDragItem *item = [self dragItemAatIndexPath:indexPath];
+    if (item) {
+        return @[item];
+    }
+    return @[];
+}
+
+/* Called to request items to add to an existing drag session in response to the add item gesture.
+ * You can use the provided point (in the collection view's coordinate space) to do additional hit testing if desired.
+ * If not implemented, or if an empty array is returned, no items will be added to the drag and the gesture
+ * will be handled normally.
+ */
+- (NSArray<UIDragItem *> *)collectionView:(UICollectionView *)collectionView
+              itemsForAddingToDragSession:(id<UIDragSession>)session
+                              atIndexPath:(NSIndexPath *)indexPath
+                                    point:(CGPoint)point  API_AVAILABLE(ios(11.0)) {
+    NSLog(@"\n%s", __func__);
+    UIDragItem *item = [self dragItemAatIndexPath:indexPath];
+    if (item) {
+        return @[item];
+    }
+    return @[];
+}
+
+/* Allows customization of the preview used for the item being lifted from or cancelling back to the collection view.
+ * If not implemented or if nil is returned, the entire cell will be used for the preview.
+ */
+- (nullable UIDragPreviewParameters *)collectionView:(UICollectionView *)collectionView dragPreviewParametersForItemAtIndexPath:(NSIndexPath *)indexPath  API_AVAILABLE(ios(11.0)) {
+    NSLog(@"\n%s", __func__);
+    return nil;
+}
+
+/* Called after the lift animation has completed to signal the start of a drag session.
+ * This call will always be balanced with a corresponding call to -collectionView:dragSessionDidEnd:
+ */
+- (void)collectionView:(UICollectionView *)collectionView dragSessionWillBegin:(id<UIDragSession>)session  API_AVAILABLE(ios(11.0)) {
+    NSLog(@"\n%s", __func__);
+    
+}
+
+/* Called to signal the end of the drag session.
+ */
+- (void)collectionView:(UICollectionView *)collectionView dragSessionDidEnd:(id<UIDragSession>)session  API_AVAILABLE(ios(11.0)) {
+    
+    NSLog(@"\n%s", __func__);
+}
+
+
+/* Controls whether move operations (see UICollectionViewDropProposal.operation) are allowed for the drag session.
+ * If not implemented this will default to YES.
+ */
+- (BOOL)collectionView:(UICollectionView *)collectionView dragSessionAllowsMoveOperation:(id<UIDragSession>)session  API_AVAILABLE(ios(11.0)){
+    NSLog(@"\n%s", __func__);
+    return YES;
+}
+
+/* Controls whether the drag session is restricted to the source application.
+ * If YES the current drag session will not be permitted to drop into another application.
+ * If not implemented this will default to NO.
+ */
+- (BOOL)collectionView:(UICollectionView *)collectionView dragSessionIsRestrictedToDraggingApplication:(id<UIDragSession>)session  API_AVAILABLE(ios(11.0)) {
+    NSLog(@"\n%s", __func__);
+    return NO;
+}
+
 
 @end

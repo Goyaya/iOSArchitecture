@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CellModel : NSObject
+@interface CellModel : NSObject <NSSecureCoding>
 
 /// size
 @property (nonatomic, readwrite, assign) float width;
