@@ -16,6 +16,8 @@
 #import "SectionModel.h"
 #import "CellModel.h"
 
+#import <Masonry.h>
+
 @interface CollectionViewController () <
 UICollectionViewDataSource
 , UICollectionViewDelegate
@@ -39,8 +41,18 @@ UICollectionViewDataSource
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.collectionView];
-    self.collectionView.frame = self.view.bounds;
-    self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (@available(iOS 11.0, *)) {
+            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+        } else {
+            make.top.equalTo(self.mas_topLayoutGuideTop);
+        }
+        make.leading.trailing.bottom.equalTo(self.view);
+    }];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"切换" style:UIBarButtonItemStylePlain target:self action:@selector(changeCollectionLayout)];
+    item.width = 50;
+    self.navigationItem.rightBarButtonItem = item;
     
 //    [self installMoveGesture];
     
@@ -71,6 +83,42 @@ UICollectionViewDataSource
             [self.collectionView reloadData];
         });
     });
+}
+
+#pragma mark - action
+
+- (void)changeCollectionLayout {
+    if ([self.collectionView.collectionViewLayout isMemberOfClass:GYCollectionViewDivisionLayout.class]) {
+        [self.collectionView setCollectionViewLayout:[self flowlayout] animated:YES completion:^(BOOL finished) {
+            if (finished) {
+                NSLog(@"转换完成");
+            } else {
+                NSLog(@"转换失败");
+            }
+        }];
+    } else {
+        [self.collectionView setCollectionViewLayout:[self divisionLayout] animated:YES completion:^(BOOL finished) {
+            if (finished) {
+                NSLog(@"转换完成");
+            } else {
+                NSLog(@"转换失败");
+            }
+        }];
+    }
+}
+
+#pragma mark -
+
+- (UICollectionViewFlowLayout *)flowlayout {
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    return layout;
+}
+
+- (GYCollectionViewDivisionLayout *)divisionLayout {
+    GYCollectionViewDivisionLayout *layout = [[GYCollectionViewDivisionLayout alloc] init];
+    layout.scrollDirection = self.direction;
+    layout.sectionHeadersPinToVisibleBounds = YES;
+    return layout;
 }
 
 - (UICollectionView *)collectionView {
@@ -230,25 +278,25 @@ UICollectionViewDataSource
 
 #pragma mark -
 
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
-//    CellModel *model = self.dataSource[indexPath.section].cells[indexPath.row];
-//    return CGSizeMake(model.width, model.height);
-//}
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    CellModel *model = self.dataSource[indexPath.section].cells[indexPath.row];
+    return CGSizeMake(model.width, model.height);
+}
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     NSLog(@"\n%s - %ld\n", __func__, section);
     return UIEdgeInsetsMake(10, 5 * section, 10, 10);
 }
 
-//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-//    NSLog(@"\n%s - %ld\n", __func__, section);
-//    return 10;
-//}
-//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-//    NSLog(@"\n%s - %ld\n", __func__, section);
-//    return 10;
-//}
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    NSLog(@"\n%s - %ld\n", __func__, section);
+    return 10;
+}
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    NSLog(@"\n%s - %ld\n", __func__, section);
+    return 10;
+}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     NSLog(@"\n%s - %ld\n", __func__, section);
