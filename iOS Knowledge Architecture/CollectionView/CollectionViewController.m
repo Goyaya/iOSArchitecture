@@ -11,6 +11,8 @@
 #import "CollectionViewCell.h"
 #import "CollectionReusableView.h"
 
+#import "GYCollectionViewDivisionLayout.h"
+
 #import "SectionModel.h"
 #import "CellModel.h"
 
@@ -33,6 +35,8 @@ UICollectionViewDataSource
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.extendedLayoutIncludesOpaqueBars = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.collectionView];
     self.collectionView.frame = self.view.bounds;
@@ -71,11 +75,9 @@ UICollectionViewDataSource
 
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
-        LXReorderableCollectionViewFlowLayout *layout = [[LXReorderableCollectionViewFlowLayout alloc] init];
-        layout.sectionInset = UIEdgeInsetsMake(10, 20, 10, 20);
-        layout.minimumLineSpacing = 10;
-        layout.minimumInteritemSpacing = 10;
-        layout.itemSize = CGSizeMake(100, 50);
+        GYCollectionViewDivisionLayout *layout = [[GYCollectionViewDivisionLayout alloc] init];
+        layout.scrollDirection = self.direction;
+        layout.sectionHeadersPinToVisibleBounds = YES;
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         _collectionView.backgroundColor = [UIColor whiteColor];
@@ -137,6 +139,19 @@ UICollectionViewDataSource
             break;
     }
 }
+
+#pragma mark -
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(GYCollectionViewDivisionLayout *)collectionViewLayout valueReferTo:(CGFloat)refer atIndexPath:(NSIndexPath *)indexPath {
+    return self.dataSource[indexPath.section].cells[indexPath.row].height;
+}
+
+/// The waterfall columns in specify section. Default is 2
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfColumnsInSection:(NSInteger)section {
+    return section + 1;
+}
+
+#pragma mark -
 
 - (void)collectionView:(UICollectionView *)collectionView itemAtIndexPath:(NSIndexPath *)fromIndexPath willMoveToIndexPath:(NSIndexPath *)toIndexPath {
     CellModel * sourceModel = [self.dataSource[fromIndexPath.section].cells objectAtIndex:fromIndexPath.row];
@@ -215,24 +230,26 @@ UICollectionViewDataSource
 
 #pragma mark -
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
-    CellModel *model = self.dataSource[indexPath.section].cells[indexPath.row];
-    return CGSizeMake(model.width, model.height);
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+//    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+//    CellModel *model = self.dataSource[indexPath.section].cells[indexPath.row];
+//    return CGSizeMake(model.width, model.height);
+//}
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     NSLog(@"\n%s - %ld\n", __func__, section);
-    return UIEdgeInsetsMake(10, 10, 10, 10);
+    return UIEdgeInsetsMake(10, 5 * section, 10, 10);
 }
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    NSLog(@"\n%s - %ld\n", __func__, section);
-    return 10;
-}
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    NSLog(@"\n%s - %ld\n", __func__, section);
-    return 10;
-}
+
+//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+//    NSLog(@"\n%s - %ld\n", __func__, section);
+//    return 10;
+//}
+//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+//    NSLog(@"\n%s - %ld\n", __func__, section);
+//    return 10;
+//}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     NSLog(@"\n%s - %ld\n", __func__, section);
     return CGSizeMake(50, 50);

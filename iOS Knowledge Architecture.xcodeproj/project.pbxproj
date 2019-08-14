@@ -25,6 +25,7 @@
 		E3537DF923024FAF00880A66 /* CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3537DF823024FAF00880A66 /* CellModel.m */; };
 		E3537DFC230252BA00880A66 /* SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3537DFB230252BA00880A66 /* SectionModel.m */; };
 		E3537DFF2302555800880A66 /* CollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3537DFE2302555800880A66 /* CollectionReusableView.m */; };
+		E3537E0E2302A53400880A66 /* GYCollectionViewDivisionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E3537E0D2302A53300880A66 /* GYCollectionViewDivisionLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,8 @@
 		E3537DFB230252BA00880A66 /* SectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SectionModel.m; sourceTree = "<group>"; };
 		E3537DFD2302555800880A66 /* CollectionReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionReusableView.h; sourceTree = "<group>"; };
 		E3537DFE2302555800880A66 /* CollectionReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionReusableView.m; sourceTree = "<group>"; };
+		E3537E0C2302A53300880A66 /* GYCollectionViewDivisionLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GYCollectionViewDivisionLayout.h; sourceTree = "<group>"; };
+		E3537E0D2302A53300880A66 /* GYCollectionViewDivisionLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GYCollectionViewDivisionLayout.m; sourceTree = "<group>"; };
 		FB4BF7A21DE4BBB83185FF58 /* Pods-iOS Knowledge Architecture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS Knowledge Architecture.release.xcconfig"; path = "Target Support Files/Pods-iOS Knowledge Architecture/Pods-iOS Knowledge Architecture.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -207,6 +210,8 @@
 				E3537DFB230252BA00880A66 /* SectionModel.m */,
 				E3537DF723024FAF00880A66 /* CellModel.h */,
 				E3537DF823024FAF00880A66 /* CellModel.m */,
+				E3537E0C2302A53300880A66 /* GYCollectionViewDivisionLayout.h */,
+				E3537E0D2302A53300880A66 /* GYCollectionViewDivisionLayout.m */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -477,6 +482,7 @@
 				E3537DF923024FAF00880A66 /* CellModel.m in Sources */,
 				E30F515B2300535000EBF152 /* UIColor+GYComponent.m in Sources */,
 				E30F51612300542800EBF152 /* CollectionViewCell.m in Sources */,
+				E3537E0E2302A53400880A66 /* GYCollectionViewDivisionLayout.m in Sources */,
 				E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */,
 				E3537DFC230252BA00880A66 /* SectionModel.m in Sources */,
 			);

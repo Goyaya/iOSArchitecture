@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CollectionViewController : UIViewController
 
+@property (nonatomic, readwrite, assign) UICollectionViewScrollDirection direction;
+
 @end
 
 NS_ASSUME_NONNULL_END
