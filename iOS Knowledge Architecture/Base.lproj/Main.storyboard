@@ -57,9 +57,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="ktY-wb-wrn" kind="show" identifier="H" id="6qJ-Br-O8J"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -82,13 +79,58 @@
                     <view key="view" contentMode="scaleToFill" id="MgV-QT-ukp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Rr-wK-Y48">
+                                <rect key="frame" x="0.0" y="88" width="414" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cwl-F1-lhb">
+                                        <rect key="frame" x="20" y="5" width="40" height="30"/>
+                                        <state key="normal" title="Insert"/>
+                                        <connections>
+                                            <action selector="insertCollectionViewCell" destination="JD7-wR-gYB" eventType="touchUpInside" id="IMS-qV-SMq"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6QI-i1-njI">
+                                        <rect key="frame" x="80" y="5" width="45" height="30"/>
+                                        <state key="normal" title="Delete"/>
+                                        <connections>
+                                            <action selector="deleteFirstCell:" destination="JD7-wR-gYB" eventType="touchUpInside" id="n0B-5P-kz7"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="6mB-JO-dYN"/>
+                                    <constraint firstItem="cwl-F1-lhb" firstAttribute="centerY" secondItem="8Rr-wK-Y48" secondAttribute="centerY" id="Ysp-cX-bTj"/>
+                                    <constraint firstItem="cwl-F1-lhb" firstAttribute="leading" secondItem="8Rr-wK-Y48" secondAttribute="leading" constant="20" id="agm-5h-7KW"/>
+                                    <constraint firstItem="6QI-i1-njI" firstAttribute="leading" secondItem="cwl-F1-lhb" secondAttribute="trailing" constant="20" id="l1F-ji-woI"/>
+                                    <constraint firstItem="6QI-i1-njI" firstAttribute="centerY" secondItem="8Rr-wK-Y48" secondAttribute="centerY" id="uRR-Nm-Aa1"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dNH-eE-iCc">
+                                <rect key="frame" x="0.0" y="128" width="414" height="734"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="i2G-oH-zCW" firstAttribute="trailing" secondItem="8Rr-wK-Y48" secondAttribute="trailing" id="4MX-2R-cP4"/>
+                            <constraint firstItem="8Rr-wK-Y48" firstAttribute="leading" secondItem="i2G-oH-zCW" secondAttribute="leading" id="Gwy-t5-Vsu"/>
+                            <constraint firstItem="dNH-eE-iCc" firstAttribute="top" secondItem="8Rr-wK-Y48" secondAttribute="bottom" id="RNo-ya-Kbp"/>
+                            <constraint firstItem="8Rr-wK-Y48" firstAttribute="top" secondItem="i2G-oH-zCW" secondAttribute="top" id="ph0-CH-BQM"/>
+                            <constraint firstItem="i2G-oH-zCW" firstAttribute="bottom" secondItem="dNH-eE-iCc" secondAttribute="bottom" id="pyh-cO-skn"/>
+                            <constraint firstItem="dNH-eE-iCc" firstAttribute="leading" secondItem="i2G-oH-zCW" secondAttribute="leading" id="twb-SI-PyX"/>
+                            <constraint firstItem="i2G-oH-zCW" firstAttribute="trailing" secondItem="dNH-eE-iCc" secondAttribute="trailing" id="zLu-hb-bwo"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="i2G-oH-zCW"/>
                     </view>
+                    <connections>
+                        <outlet property="contentView" destination="dNH-eE-iCc" id="gz8-OW-oib"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wCM-bZ-3tm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1855" y="88"/>
+            <point key="canvasLocation" x="1862" y="88"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="RvE-Wp-2kw">
@@ -107,21 +149,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SC1-ru-ZSN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="169.56521739130437" y="87.723214285714278"/>
-        </scene>
-        <!--CollectionView-->
-        <scene sceneID="cUB-Od-XK7">
-            <objects>
-                <viewController title="CollectionView" id="ktY-wb-wrn" customClass="CollectionViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="9qO-aB-cSi">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="AHn-f0-dTO"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UHX-JW-1TJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1870" y="761"/>
         </scene>
     </scenes>
 </document>

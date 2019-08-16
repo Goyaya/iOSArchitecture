@@ -23,6 +23,7 @@ UICollectionViewDataSource
 , UICollectionViewDelegate
 , UICollectionViewDelegateFlowLayout
 , UICollectionViewDragDelegate
+, UICollectionViewDropDelegate
 >
 
 @property (nonatomic, readwrite, strong) UICollectionView *collectionView;
@@ -30,6 +31,8 @@ UICollectionViewDataSource
 @property (nonatomic, readwrite, strong) NSMutableArray<SectionModel *> *dataSource;
 /// sectionTitle
 @property (nonatomic, readwrite, strong) NSMutableArray<NSString *> *sectionTitles;
+
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 
 @end
 
@@ -41,14 +44,9 @@ UICollectionViewDataSource
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.view.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.collectionView];
+    [self.contentView addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        if (@available(iOS 11.0, *)) {
-            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
-        } else {
-            make.top.equalTo(self.mas_topLayoutGuideTop);
-        }
-        make.leading.trailing.bottom.equalTo(self.view);
+        make.edges.equalTo(self.contentView);
     }];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"切换" style:UIBarButtonItemStylePlain target:self action:@selector(changeCollectionLayout)];
@@ -58,18 +56,15 @@ UICollectionViewDataSource
 //    [self installMoveGesture];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        int sections = 5;
-        int cellsInSection = 20;
+        int sections = 100;
+        int cellsInSection = 10;
         for (int i = 0; i < sections; ++i) {
             SectionModel *sectionModel = [[SectionModel alloc] init];
             sectionModel.headerTitle = [NSString stringWithFormat:@"header - %d", i];
             sectionModel.footerTitle = [NSString stringWithFormat:@"footer - %d", i];
             [self.sectionTitles addObject:[NSString stringWithFormat:@"%d",i]];
             for (int j = 0; j < cellsInSection; ++j) {
-                CellModel *model = [[CellModel alloc] init];
-                model.width = arc4random() % 120 + 50;
-                model.height = arc4random() % 100 + 50;
-                model.title = [NSString stringWithFormat:@"cell - (%d, %d)", i, j];
+                CellModel *model = [self cellModelWithTitle:[NSString stringWithFormat:@"cell - (%d, %d)", i, j]];
                 [sectionModel.cells addObject:model];
             }
             [self.dataSource addObject:sectionModel];
@@ -112,21 +107,21 @@ UICollectionViewDataSource
 
 - (UICollectionViewFlowLayout *)flowlayout {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.sectionHeadersPinToVisibleBounds = YES;
+    layout.sectionFootersPinToVisibleBounds = YES;
     return layout;
 }
 
 - (GYCollectionViewDivisionLayout *)divisionLayout {
     GYCollectionViewDivisionLayout *layout = [[GYCollectionViewDivisionLayout alloc] init];
     layout.scrollDirection = self.direction;
-    layout.sectionHeadersPinToVisibleBounds = YES;
+//    layout.sectionHeadersPinToVisibleBounds = YES;
     return layout;
 }
 
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
-        GYCollectionViewDivisionLayout *layout = [[GYCollectionViewDivisionLayout alloc] init];
-        layout.scrollDirection = self.direction;
-        layout.sectionHeadersPinToVisibleBounds = YES;
+        UICollectionViewLayout *layout = [self divisionLayout];
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         _collectionView.backgroundColor = [UIColor whiteColor];
@@ -140,6 +135,10 @@ UICollectionViewDataSource
         if (@available(iOS 11.0, *)) {
             _collectionView.dragDelegate = self;
             _collectionView.dragInteractionEnabled = YES;
+            
+            _collectionView.dropDelegate = self;
+            _collectionView.springLoaded = YES;
+            _collectionView.reorderingCadence = UICollectionViewReorderingCadenceImmediate;
         }
     }
     return _collectionView;
@@ -193,23 +192,44 @@ UICollectionViewDataSource
     }
 }
 
+- (CellModel *)cellModelWithTitle:(NSString *)title {
+    CellModel *model = [[CellModel alloc] init];
+    model.title = title;
+    model.width = arc4random() % 120 + 50;
+    model.height = arc4random() % 100 + 50;
+    return model;
+}
+
+- (IBAction)insertCollectionViewCell {
+    CellModel *model = [self cellModelWithTitle:[NSString stringWithFormat:@"inserted %@", [NSDate date]]];
+    [self.dataSource.firstObject.cells insertObject:model atIndex:0];
+    [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+}
+
+- (IBAction)deleteFirstCell:(UIButton *)sender {
+    if (self.dataSource.firstObject.cells.count) {
+        [self.dataSource.firstObject.cells removeObjectAtIndex:0];
+        [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+    }
+}
+
 #pragma mark -
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(GYCollectionViewDivisionLayout *)collectionViewLayout valueReferTo:(CGFloat)refer atIndexPath:(NSIndexPath *)indexPath {
-    return self.dataSource[indexPath.section].cells[indexPath.row].height;
+    return self.dataSource[indexPath.section].cells[indexPath.item].height;
 }
 
 /// The waterfall columns in specify section. Default is 2
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfColumnsInSection:(NSInteger)section {
-    return section + 1;
+    return 2;
 }
 
 #pragma mark -
 
 - (void)collectionView:(UICollectionView *)collectionView itemAtIndexPath:(NSIndexPath *)fromIndexPath willMoveToIndexPath:(NSIndexPath *)toIndexPath {
-    CellModel * sourceModel = [self.dataSource[fromIndexPath.section].cells objectAtIndex:fromIndexPath.row];
+    CellModel * sourceModel = [self.dataSource[fromIndexPath.section].cells objectAtIndex:fromIndexPath.item];
     [self.dataSource[fromIndexPath.section].cells removeObject:sourceModel];
-    [self.dataSource[toIndexPath.section].cells insertObject:sourceModel atIndex:toIndexPath.row];
+    [self.dataSource[toIndexPath.section].cells insertObject:sourceModel atIndex:toIndexPath.item];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -220,9 +240,9 @@ UICollectionViewDataSource
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    CellModel *model = self.dataSource[indexPath.section].cells[indexPath.row];
+    CellModel *model = self.dataSource[indexPath.section].cells[indexPath.item];
     cell.label.text = model.title;
     return cell;
 }
@@ -234,7 +254,7 @@ UICollectionViewDataSource
 
 // The view that is returned must be retrieved from a call to -dequeueReusableSupplementaryViewOfKind:withReuseIdentifier:forIndexPath:
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     CollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kind forIndexPath:indexPath];
     SectionModel *model = self.dataSource[indexPath.section];
     if ([UICollectionElementKindSectionHeader isEqualToString:kind]) {
@@ -246,25 +266,25 @@ UICollectionViewDataSource
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     return NO;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath*)destinationIndexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, destinationIndexPath.section, destinationIndexPath.row);
-//    if (sourceIndexPath.section == destinationIndexPath.section && sourceIndexPath.row == destinationIndexPath.row) {
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, destinationIndexPath.section, destinationIndexPath.item);
+//    if (sourceIndexPath.section == destinationIndexPath.section && sourceIndexPath.item == destinationIndexPath.item) {
 //        return;
 //    }
 //
 //    if (sourceIndexPath.section == destinationIndexPath.section) {
-//        [self.dataSource[sourceIndexPath.section].cells exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
+//        [self.dataSource[sourceIndexPath.section].cells exchangeObjectAtIndex:sourceIndexPath.item withObjectAtIndex:destinationIndexPath.item];
 //    } else {
-//        CellModel *sourceModel = self.dataSource[sourceIndexPath.section].cells[sourceIndexPath.row];
+//        CellModel *sourceModel = self.dataSource[sourceIndexPath.section].cells[sourceIndexPath.item];
 //
 //        // 从之前组删除
 //        [self.dataSource[sourceIndexPath.section].cells removeObject:sourceModel];
 //        // 插入新的组
-//        [self.dataSource[destinationIndexPath.section].cells insertObject:sourceModel atIndex:destinationIndexPath.row];
+//        [self.dataSource[destinationIndexPath.section].cells insertObject:sourceModel atIndex:destinationIndexPath.item];
 //    }
 }
 
@@ -284,8 +304,8 @@ UICollectionViewDataSource
 #pragma mark -
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
-    CellModel *model = self.dataSource[indexPath.section].cells[indexPath.row];
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
+    CellModel *model = self.dataSource[indexPath.section].cells[indexPath.item];
     return CGSizeMake(model.width, model.height);
 }
 
@@ -326,11 +346,11 @@ UICollectionViewDataSource
 // 4. -collectionView:didSelectItemAtIndexPath: or -collectionView:didDeselectItemAtIndexPath:
 // 5. -collectionView:didUnhighlightItemAtIndexPath:
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     return YES;
 }
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     
 //    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
 //    [UIView animateWithDuration:0.25 animations:^{
@@ -339,7 +359,7 @@ UICollectionViewDataSource
     
 }
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     
 //    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
 //    [UIView animateWithDuration:0.25 animations:^{
@@ -348,55 +368,55 @@ UICollectionViewDataSource
     
 }
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     return YES;
 }
 // called when the user taps on an already-selected item in multi-select mode
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     return YES;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     
 }
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     
 }
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingSupplementaryView:(UICollectionReusableView *)view forElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     
 }
 
 // These methods provide support for copy/paste actions on cells.
 // All three should be implemented if any are.
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     return NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     return YES;
 }
 - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     
 }
 
@@ -410,7 +430,7 @@ UICollectionViewDataSource
 
 // Focus NS_AVAILABLE_IOS(9_0)
 - (BOOL)collectionView:(UICollectionView *)collectionView canFocusItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, indexPath.section, indexPath.item);
     return YES;
 }
 // NS_AVAILABLE_IOS(9_0)
@@ -430,7 +450,7 @@ UICollectionViewDataSource
 
 // NS_AVAILABLE_IOS(9_0)
 - (NSIndexPath *)collectionView:(UICollectionView *)collectionView targetIndexPathForMoveFromItemAtIndexPath:(NSIndexPath *)originalIndexPath toProposedIndexPath:(NSIndexPath *)proposedIndexPath  {
-    NSLog(@"\n%s - (%ld, %ld)\n", __func__, proposedIndexPath.section, proposedIndexPath.row);
+    NSLog(@"\n%s - (%ld, %ld)\n", __func__, proposedIndexPath.section, proposedIndexPath.item);
     return proposedIndexPath;
 }
 // NS_AVAILABLE_IOS(9_0); // customize the content offset to be applied during transition or update animations
@@ -458,11 +478,17 @@ UICollectionViewDataSource
 #pragma mark - drag
 
 - (UIDragItem *)dragItemAatIndexPath:(NSIndexPath *)indexPath  API_AVAILABLE(ios(11.0)) {
-    if (indexPath.section < self.dataSource.count && indexPath.row < self.dataSource[indexPath.section].cells.count) {
-        CellModel *model = self.dataSource[indexPath.section].cells[indexPath.row];
+    if (indexPath.section < self.dataSource.count && indexPath.item < self.dataSource[indexPath.section].cells.count) {
+        CellModel *model = self.dataSource[indexPath.section].cells[indexPath.item];
         NSItemProvider *provider = [[NSItemProvider alloc] initWithItem:model typeIdentifier:@"MODEL"];
         UIDragItem *dragItem = [[UIDragItem alloc] initWithItemProvider:provider];
-        dragItem.localObject = [UIApplication sharedApplication];
+        /// 提供文件类型
+//        [[NSItemProvider alloc] registerFileRepresentationForTypeIdentifier:@"" fileOptions:NSItemProviderFileOptionOpenInPlace visibility:NSItemProviderRepresentationVisibilityAll loadHandler:^NSProgress * _Nullable(void (^ _Nonnull completionHandler)(NSURL * _Nullable, BOOL, NSError * _Nullable)) {
+//            completionHandler(nil, YES, nil);
+//            return [NSProgress currentProgress];
+//        }];
+        // 只能在本APP内部交换的数据
+        dragItem.localObject = model;
         return dragItem;
     }
     return nil;
@@ -510,7 +536,6 @@ UICollectionViewDataSource
  */
 - (void)collectionView:(UICollectionView *)collectionView dragSessionWillBegin:(id<UIDragSession>)session  API_AVAILABLE(ios(11.0)) {
     NSLog(@"\n%s", __func__);
-    
 }
 
 /* Called to signal the end of the drag session.
@@ -538,5 +563,124 @@ UICollectionViewDataSource
     return NO;
 }
 
+#pragma mark - drop
+
+/* Called when the user initiates the drop.
+ * Use the dropCoordinator to specify how you wish to animate the dropSession's items into their final position as
+ * well as update the collection view's data source with data retrieved from the dropped items.
+ * If the supplied method does nothing, default drop animations will be supplied and the collection view will
+ * revert back to its initial pre-drop session state.
+ */
+- (void)collectionView:(UICollectionView *)collectionView performDropWithCoordinator:(id<UICollectionViewDropCoordinator>)coordinator  API_AVAILABLE(ios(11.0)) {
+    NSLog(@"\n%s", __func__);
+    NSInteger __block offset = coordinator.destinationIndexPath.item;
+    for (id<UICollectionViewDropItem>  _Nonnull dropItem in coordinator.items) {
+        // 同一个collectionView的数据交流
+        if (dropItem.sourceIndexPath) {
+            CellModel *model = self.dataSource[dropItem.sourceIndexPath.section].cells[dropItem.sourceIndexPath.item];
+            [self.dataSource[dropItem.sourceIndexPath.section].cells removeObjectAtIndex:dropItem.sourceIndexPath.item];
+            [self.dataSource[coordinator.destinationIndexPath.section].cells insertObject:model atIndex:offset];
+            
+            [self.collectionView performBatchUpdates:^{
+                [self.collectionView deleteItemsAtIndexPaths:@[dropItem.sourceIndexPath]];
+                [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:offset inSection:coordinator.destinationIndexPath.section]]];
+            } completion:^(BOOL finished) { }];
+            
+            offset ++;
+        }
+        // 本APP内部数据交流
+        else if (dropItem.dragItem.localObject && [dropItem.dragItem.localObject isKindOfClass:[CellModel class]]){
+            CellModel *sourceModel = dropItem.dragItem.localObject;
+            [self.dataSource[dropItem.sourceIndexPath.section].cells removeObjectAtIndex:dropItem.sourceIndexPath.item];
+            [self.dataSource[coordinator.destinationIndexPath.section].cells insertObject:sourceModel atIndex:offset];
+            [coordinator dropItem:dropItem.dragItem toItemAtIndexPath:[NSIndexPath indexPathForItem:offset inSection:coordinator.destinationIndexPath.section]];
+            offset ++;
+        } else {
+            // 通过Provider获取数据
+            [dropItem.dragItem.itemProvider loadItemForTypeIdentifier:@"MODEL" options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSError *unarchiver = nil;
+                    CellModel *model = nil;
+                    NSData *mayBeData = (NSData *)item;
+                    if ([mayBeData isKindOfClass:NSData.class]) {
+                        model = [NSKeyedUnarchiver unarchivedObjectOfClass:CellModel.class fromData:mayBeData error:&unarchiver];
+                    }
+                    if (error || [model isKindOfClass:CellModel.class] == NO) {
+                        return ;
+                    }
+                    switch (coordinator.proposal.intent) {
+                        case UICollectionViewDropIntentUnspecified:
+                        case UICollectionViewDropIntentInsertAtDestinationIndexPath: {
+                            [self.dataSource[coordinator.destinationIndexPath.section].cells insertObject:model atIndex:offset];
+                            [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:offset inSection:coordinator.destinationIndexPath.section]]];
+                            offset ++;
+                        } break;
+                        case UICollectionViewDropIntentInsertIntoDestinationIndexPath: {
+                            CellModel *desModel = self.dataSource[coordinator.destinationIndexPath.section].cells[coordinator.destinationIndexPath.item];
+                            desModel.title = [desModel.title stringByAppendingString:model.title];
+                            [self.collectionView reloadItemsAtIndexPaths:@[coordinator.destinationIndexPath]];
+                        }  break;
+                    }
+                });
+            }];
+        }
+    }
+}
+
+/* If NO is returned no further delegate methods will be called for this drop session.
+ * If not implemented, a default value of YES is assumed.
+ */
+- (BOOL)collectionView:(UICollectionView *)collectionView canHandleDropSession:(id<UIDropSession>)session  API_AVAILABLE(ios(11.0)) {
+    NSLog(@"\n%s", __func__);
+    return YES;
+}
+
+/* Called when the drop session begins tracking in the collection view's coordinate space.
+ */
+- (void)collectionView:(UICollectionView *)collectionView dropSessionDidEnter:(id<UIDropSession>)session  API_AVAILABLE(ios(11.0)){
+    NSLog(@"\n%s", __func__);
+    
+}
+
+/* Called frequently while the drop session being tracked inside the collection view's coordinate space.
+ * When the drop is at the end of a section, the destination index path passed will be for a item that does not yet exist (equal
+ * to the number of items in that section), where an inserted item would append to the end of the section.
+ * The destination index path may be nil in some circumstances (e.g. when dragging over empty space where there are no cells).
+ * Note that in some cases your proposal may not be allowed and the system will enforce a different proposal.
+ * You may perform your own hit testing via -[UIDropSession locationInView]
+ */
+- (UICollectionViewDropProposal *)collectionView:(UICollectionView *)collectionView dropSessionDidUpdate:(id<UIDropSession>)session withDestinationIndexPath:(nullable NSIndexPath *)destinationIndexPath  API_AVAILABLE(ios(11.0)) {
+    NSLog(@"\n%s", __func__);
+    UIDropOperation opeartion = UIDropOperationCopy;
+    if (session.allowsMoveOperation) {
+        opeartion = UIDropOperationMove;
+    }
+    return [[UICollectionViewDropProposal alloc] initWithDropOperation:opeartion intent:UICollectionViewDropIntentInsertAtDestinationIndexPath];
+}
+
+/* Called when the drop session is no longer being tracked inside the collection view's coordinate space.
+ */
+- (void)collectionView:(UICollectionView *)collectionView dropSessionDidExit:(id<UIDropSession>)session  API_AVAILABLE(ios(11.0)){
+    NSLog(@"\n%s", __func__);
+    
+}
+
+/* Called when the drop session completed, regardless of outcome. Useful for performing any cleanup.
+ */
+- (void)collectionView:(UICollectionView *)collectionView dropSessionDidEnd:(id<UIDropSession>)session  API_AVAILABLE(ios(11.0)){
+    NSLog(@"\n%s", __func__);
+    
+}
+
+/* Allows customization of the preview used for the item being dropped.
+ * If not implemented or if nil is returned, the entire cell will be used for the preview.
+ *
+ * This will be called as needed when animating drops via -[UICollectionViewDropCoordinator dropItem:toItemAtIndexPath:]
+ * (to customize placeholder drops, please see UICollectionViewDropPlaceholder.previewParametersProvider)
+ */
+- (nullable UIDragPreviewParameters *)collectionView:(UICollectionView *)collectionView dropPreviewParametersForItemAtIndexPath:(NSIndexPath *)indexPath  API_AVAILABLE(ios(11.0)){
+    NSLog(@"\n%s", __func__);
+    return nil;
+}
 
 @end

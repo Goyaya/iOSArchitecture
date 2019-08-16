@@ -74,7 +74,7 @@
                 CGSize headerSize = [self headerSizeAtNoCheck:section];
                 if (headerSize.height > 0) {
                     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
-                    UICollectionViewLayoutAttributes *headerAttributes = [super layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader atIndexPath:indexPath];
+                    UICollectionViewLayoutAttributes *headerAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader withIndexPath:indexPath];
                     if (headerAttributes) {
                         headerAttributes.frame = CGRectMake(0, sectionLastY, maxWidth, headerSize.height);
                         NSString *key = [NSString stringWithFormat:@"%ld-%ld", indexPath.section, indexPath.item];
@@ -94,8 +94,8 @@
                 // 2.2 计算cell的attributes
                 for (NSInteger cell = 0; cell < cells; ++cell) {
                     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:cell inSection:section];
-                    UICollectionViewLayoutAttributes *attributes = [super layoutAttributesForItemAtIndexPath:indexPath];
-                    CGFloat cellHeight = [[self delegate] collectionView:self.collectionView layout:self valueReferTo:cellWith atIndexPath:indexPath];
+                    UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+                    CGFloat cellHeight = [self valueRefer:cellWith atIndexPathNoCheck:indexPath];
                     CGRect referFrame = [frameRecorder.firstObject CGRectValue];
                     CGRect frame = CGRectMake(referFrame.origin.x, CGRectGetMaxY(referFrame) + lineSpacing, cellWith, cellHeight);
                     [self updateFrameRecorderByMaxY:frameRecorder withFrame:frame];
@@ -108,7 +108,7 @@
                 CGSize footerSize = [self footerSizeAtNoCheck:section];
                 if (footerSize.height > 0) {
                     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:1 inSection:section];
-                    UICollectionViewLayoutAttributes *footerAttributes = [super layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionFooter atIndexPath:indexPath];
+                    UICollectionViewLayoutAttributes *footerAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionFooter withIndexPath:indexPath];
                     if (footerAttributes) {
                         footerAttributes.frame = CGRectMake(0, sectionLastY + insets.bottom, maxWidth, footerSize.height);
                         NSString *key = [NSString stringWithFormat:@"%ld-%ld", indexPath.section, indexPath.item];
@@ -129,7 +129,7 @@
                 CGSize headerSize = [self headerSizeAtNoCheck:section];
                 if (headerSize.width > 0) {
                     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
-                    UICollectionViewLayoutAttributes *headerAttributes = [super layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader atIndexPath: indexPath];
+                    UICollectionViewLayoutAttributes *headerAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader withIndexPath:indexPath];
                     if (headerAttributes) {
                         headerAttributes.frame = CGRectMake(sectionLastX, 0, headerSize.width, maxHeight);
                         NSString *key = [NSString stringWithFormat:@"%ld-%ld", indexPath.section, indexPath.item];
@@ -149,8 +149,8 @@
                 // 2.2 计算cell的attributes
                 for (NSInteger cell = 0; cell < cells; ++cell) {
                     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:cell inSection:section];
-                    UICollectionViewLayoutAttributes *attributes = [super layoutAttributesForItemAtIndexPath:indexPath];
-                    CGFloat cellWidth = [[self delegate] collectionView:self.collectionView layout:self valueReferTo:cellHeight atIndexPath:indexPath];
+                    UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+                    CGFloat cellWidth = [self valueRefer:cellHeight atIndexPathNoCheck:indexPath];
                     CGRect referFrame = [frameRecorder.firstObject CGRectValue];
                     CGRect frame = CGRectMake(CGRectGetMaxX(referFrame) + lineSpacing, referFrame.origin.y, cellWidth, cellHeight);
                     [self updateFrameRecorderByMaxX:frameRecorder withFrame:frame];
@@ -163,7 +163,7 @@
                 CGSize footerSize = [self footerSizeAtNoCheck:section];
                 if (footerSize.width > 0) {
                     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:1 inSection:section];
-                    UICollectionViewLayoutAttributes *footerAttributes = [super layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionFooter atIndexPath:indexPath];
+                    UICollectionViewLayoutAttributes *footerAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionFooter withIndexPath:indexPath];
                     if (footerAttributes) {
                         footerAttributes.frame = CGRectMake(sectionLastX + insets.right, 0, footerSize.width, maxHeight);
                         NSString *key = [NSString stringWithFormat:@"%ld-%ld", indexPath.section, indexPath.item];
@@ -269,6 +269,14 @@
         return [delegate collectionView:self.collectionView layout:self referenceSizeForFooterInSection:section];
     }
     return self.footerReferenceSize;
+}
+
+- (CGFloat)valueRefer:(CGFloat)refer atIndexPathNoCheck:(NSIndexPath *)indexPath {
+    id<GYCollectionViewDivisionLayoutDelegate> delegate = [self delegate];
+    if ([delegate respondsToSelector:@selector(collectionView:layout:valueReferTo:atIndexPath:)]) {
+        return [delegate collectionView:self.collectionView layout:self valueReferTo:refer atIndexPath:indexPath];
+    }
+    return refer;
 }
 
 - (NSInteger)columnsAtNoCheck:(NSInteger)section {
