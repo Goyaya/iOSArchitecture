@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,6 +20,7 @@
 		E308BD2C22EDF72600C47F72 /* iOS_Knowledge_ArchitectureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD2B22EDF72600C47F72 /* iOS_Knowledge_ArchitectureTests.m */; };
 		E308BD3722EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E308BD3622EDF72600C47F72 /* iOS_Knowledge_ArchitectureUITests.m */; };
 		E309A2272306A30E00BE50D0 /* StackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E309A2262306A30E00BE50D0 /* StackViewController.m */; };
+		E309A22B2306A71C00BE50D0 /* UIColor+GYComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E309A2292306A71C00BE50D0 /* UIColor+GYComponent.m */; };
 		E30F515423003B9400EBF152 /* ControlsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E30F515323003B9400EBF152 /* ControlsViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,8 @@
 		E308BD3822EDF72600C47F72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E309A2252306A30E00BE50D0 /* StackViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StackViewController.h; sourceTree = "<group>"; };
 		E309A2262306A30E00BE50D0 /* StackViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StackViewController.m; sourceTree = "<group>"; };
+		E309A2292306A71C00BE50D0 /* UIColor+GYComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+GYComponent.m"; sourceTree = "<group>"; };
+		E309A22A2306A71C00BE50D0 /* UIColor+GYComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+GYComponent.h"; sourceTree = "<group>"; };
 		E30F515223003B9400EBF152 /* ControlsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlsViewController.h; sourceTree = "<group>"; };
 		E30F515323003B9400EBF152 /* ControlsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ControlsViewController.m; sourceTree = "<group>"; };
 		FB4BF7A21DE4BBB83185FF58 /* Pods-iOS Knowledge Architecture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS Knowledge Architecture.release.xcconfig"; path = "Target Support Files/Pods-iOS Knowledge Architecture/Pods-iOS Knowledge Architecture.release.xcconfig"; sourceTree = "<group>"; };
@@ -139,6 +142,7 @@
 		E308BD0E22EDF72400C47F72 /* iOS Knowledge Architecture */ = {
 			isa = PBXGroup;
 			children = (
+				E309A2282306A71C00BE50D0 /* Tools */,
 				E308BD0F22EDF72400C47F72 /* AppDelegate.h */,
 				E308BD1022EDF72400C47F72 /* AppDelegate.m */,
 				E30F515223003B9400EBF152 /* ControlsViewController.h */,
@@ -173,6 +177,15 @@
 				E308BD3822EDF72600C47F72 /* Info.plist */,
 			);
 			path = "iOS Knowledge ArchitectureUITests";
+			sourceTree = "<group>";
+		};
+		E309A2282306A71C00BE50D0 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				E309A2292306A71C00BE50D0 /* UIColor+GYComponent.m */,
+				E309A22A2306A71C00BE50D0 /* UIColor+GYComponent.h */,
+			);
+			path = Tools;
 			sourceTree = "<group>";
 		};
 		E61FFBB79302708C62392BDA /* Frameworks */ = {
@@ -426,6 +439,7 @@
 				E308BD1A22EDF72400C47F72 /* iOS_Knowledge_Architecture.xcdatamodeld in Sources */,
 				E309A2272306A30E00BE50D0 /* StackViewController.m in Sources */,
 				E308636322EF4A6D00675E1F /* MasterTableViewController.m in Sources */,
+				E309A22B2306A71C00BE50D0 /* UIColor+GYComponent.m in Sources */,
 				E308BD2222EDF72600C47F72 /* main.m in Sources */,
 				E30F515423003B9400EBF152 /* ControlsViewController.m in Sources */,
 				E308BD1122EDF72400C47F72 /* AppDelegate.m in Sources */,
