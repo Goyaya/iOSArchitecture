@@ -24,6 +24,14 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 2) {
+        UIViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ControlsViewController"];
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
+        [self presentViewController:navController animated:YES completion:nil];
+    }
+}
+
 #pragma mark - Table view data source
 
 /*

@@ -61,6 +61,23 @@
                                             <segue destination="Lio-fF-KD8" kind="show" id="vSG-SW-ZjZ"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="2Re-M3-kFs" style="IBUITableViewCellStyleDefault" id="JJ3-Zm-YgV">
+                                        <rect key="frame" x="0.0" y="88" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JJ3-Zm-YgV" id="2ai-DJ-tLY">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="NavigationBarBack" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2Re-M3-kFs">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -78,7 +95,7 @@
         <!--StackView-->
         <scene sceneID="CZV-Uf-UkB">
             <objects>
-                <viewController title="StackView" id="Lio-fF-KD8" customClass="StackViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StackViewController" title="StackView" id="Lio-fF-KD8" customClass="StackViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8Sz-kR-p8i">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -257,7 +274,7 @@
         <!--Controls-->
         <scene sceneID="Mzh-uG-hPV">
             <objects>
-                <viewController title="Controls" id="T7F-4V-lHa" customClass="ControlsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ControlsViewController" title="Controls" id="T7F-4V-lHa" customClass="ControlsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5dm-ZD-c9N">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

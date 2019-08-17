@@ -27,6 +27,11 @@
     }];
 }
 
+- (void)someControlTouchUpinside:(id)sender {
+    ControlsViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ControlsViewController"];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 /*
 #pragma mark - Navigation
 
