@@ -56,8 +56,8 @@ UICollectionViewDataSource
 //    [self installMoveGesture];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        int sections = 100;
-        int cellsInSection = 10;
+        int sections = 1;
+        int cellsInSection = 1;
         for (int i = 0; i < sections; ++i) {
             SectionModel *sectionModel = [[SectionModel alloc] init];
             sectionModel.headerTitle = [NSString stringWithFormat:@"header - %d", i];
@@ -107,8 +107,12 @@ UICollectionViewDataSource
 
 - (UICollectionViewFlowLayout *)flowlayout {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.sectionHeadersPinToVisibleBounds = YES;
-    layout.sectionFootersPinToVisibleBounds = YES;
+//    layout.sectionHeadersPinToVisibleBounds = YES;
+//    layout.sectionFootersPinToVisibleBounds = YES;
+    layout.estimatedItemSize = CGSizeMake(200, 50);
+    layout.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
+    layout.minimumInteritemSpacing = 10;
+    layout.minimumLineSpacing = 10;
     return layout;
 }
 

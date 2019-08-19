@@ -363,16 +363,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iOS Knowledge Architecture/Pods-iOS Knowledge Architecture-frameworks.sh",
-				"${PODS_ROOT}/LookinServer/LookinServer.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-iOS Knowledge Architecture/Pods-iOS Knowledge Architecture-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LookinServer.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-iOS Knowledge Architecture/Pods-iOS Knowledge Architecture-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -385,16 +380,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iOS Knowledge Architecture/Pods-iOS Knowledge Architecture-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/DoraemonKit/DoraemonKit.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-iOS Knowledge Architecture/Pods-iOS Knowledge Architecture-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DoraemonKit.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-iOS Knowledge Architecture/Pods-iOS Knowledge Architecture-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
